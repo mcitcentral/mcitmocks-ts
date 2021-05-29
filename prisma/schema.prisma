@@ -1,0 +1,70 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id       String  @id
+  email    String
+  timeZone String? @map("time_zone")
+
+  availability        Availability[]
+  interviewsAsInvitee Interview[]    @relation("Invitee")
+  interviewsAsInviter Interview[]    @relation("Inviter")
+  @@map(name: "users")
+}
+
+model Availability {
+  id        String   @id
+  userId    String   @map("user_id")
+  user      User     @relation(fields: [userId], references: [id])
+  startTime DateTime @map("start_time")
+  isTaken   Boolean  @default(false) @map("is_taken")
+
+  @@map(name: "availability")
+}
+
+model Interview {
+  id          String   @id
+  inviterId   String   @map("inviter_id")
+  inviter     User     @relation("Inviter", fields: [inviterId], references: [id])
+  inviteeId   String   @map("invitee_id")
+  invitee     User     @relation("Invitee", fields: [inviteeId], references: [id])
+  startTime   DateTime @map("start_time")
+  isConfirmed Boolean  @default(false) @map("is_confirmed")
+
+  @@map(name: "interviews")
+}
+
+model InterviewQuestion {
+  id                 String             @id
+  questionName       String             @map("question_name")
+  questionText       String             @map("question_text")
+  answerText         String             @map("answer_text")
+  questionDifficulty QuestionDifficulty @map("question_difficulty")
+  questionType       QuestionType[]     @map("question_type")
+
+  @@map(name: "interview_questions")
+}
+
+enum QuestionDifficulty {
+  EASY
+  MEDIUM
+  HARD
+
+  @@map("question_difficulty")
+}
+
+enum QuestionType {
+  ARRAY
+  LINKED_LIST
+
+  @@map("question_type")
+}

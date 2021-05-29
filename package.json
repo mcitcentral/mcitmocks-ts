@@ -1,0 +1,26 @@
+{
+  "name": "mcitmocks",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "ts-node index"
+  },
+  "dependencies": {
+    "@prisma/client": "2.23.0",
+    "cookie-parser": "1.4.5",
+    "dotenv": "10.0.0",
+    "express": "4.17.1",
+    "express-jwt": "6.0.0",
+    "google-auth-library": "7.1.0",
+    "jsonwebtoken": "8.5.1"
+  },
+  "devDependencies": {
+    "@types/cookie-parser": "1.4.2",
+    "@types/express": "4.17.12",
+    "@types/express-jwt": "6.0.1",
+    "@types/jest": "26.0.15",
+    "@types/jsonwebtoken": "8.5.1",
+    "@types/node": "12.0.0",
+    "prisma": "2.23.0",
+    "typescript": "4.1.2"
+  }
+}
