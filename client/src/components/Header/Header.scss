@@ -1,0 +1,39 @@
+@import "../../styles/Variables.scss";
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  height: 75px;
+  width: 100%;
+  padding: 0 25px;
+  background-color: $gray-900;
+  &__left {
+    span {
+      color: white;
+      font-family: "IBM Plex Mono", monospace;
+      font-weight: 500;
+      font-size: 24px;
+    }
+  }
+  &__right {
+    display: flex;
+    justify-content: flex-end;
+  }
+}
+
+.loginButton {
+  height: 40px;
+  padding: 0 15px;
+  border-radius: 10px;
+  background-color: white;
+  font-family: "IBM Plex Mono", monospace;
+  text-transform: uppercase;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  svg {
+    margin-right: 10px;
+  }
+}
