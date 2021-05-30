@@ -15,14 +15,9 @@ export default function authController(prismaClient: PrismaClient) {
     jwt({
       secret: process.env.JWT_TOKEN_KEY!,
       algorithms: ["HS256"],
+      credentialsRequired: false,
       getToken: (req) => req.cookies.mcitmocks,
-    }).unless({
-      path: ["/token"],
-    }),
-    (req, res, next) => {
-      if (!req.user) return res.sendStatus(401);
-      next();
-    }
+    }).unless({ path: ["/token"] })
   );
 
   authRouter.post("/token", async (req: Request<{}, {}, PostTokenRequest>, res: Response) => {
@@ -39,7 +34,7 @@ export default function authController(prismaClient: PrismaClient) {
 
   authRouter.get("/user", async (req: Request, res: Response) => {
     try {
-      if (!req.user) throw new Error("Not authenticated.");
+      if (!req.user) return res.status(401).send({ error: "Not Authenticated." });
       const user = await userRepository.getUserById(req.user.id);
       res.json({ user });
     } catch (e) {

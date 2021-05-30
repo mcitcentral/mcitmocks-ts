@@ -4,6 +4,7 @@ dotenv.config();
 import { PrismaClient } from ".prisma/client";
 import express, { Request, Response } from "express";
 import cookieParser from "cookie-parser";
+
 import authController from "./controllers/authController";
 
 const port = process.env.PORT || 8000;

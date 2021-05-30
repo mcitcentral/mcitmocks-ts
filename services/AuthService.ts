@@ -19,6 +19,7 @@ export default class AuthService {
   }
 
   async verifyToken(idToken: string): Promise<User> {
+    if (!idToken) throw new Error("No token found.");
     const ticket = await this.googleAuthClient.verifyIdToken({ idToken, audience: this.googleClientId });
     const payload = ticket.getPayload();
     if (!payload) throw new Error("Invalid token.");
