@@ -11,7 +11,7 @@ export const fetchUserByJWT = createAsyncThunk("auth/fetchUserByJWT", async () =
 
 const authSlice = createSlice({
   name: "auth",
-  initialState: { user: null, isLoading: false, isAuthenticated: false },
+  initialState: { user: null, isLoading: true, isAuthenticated: false },
   reducers: {
     setUser(state, action) {
       if (action.payload) {
@@ -25,24 +25,29 @@ const authSlice = createSlice({
     resetUser(state, _action) {
       state.user = null;
       state.isAuthenticated = false;
+      state.isLoading = true;
     },
   },
   extraReducers: {
     [fetchUserByAccessToken.fulfilled.type]: (state, action) => {
       state.user = action.payload.user;
       state.isAuthenticated = true;
+      state.isLoading = false;
     },
     [fetchUserByAccessToken.rejected.type]: (state) => {
       state.user = null;
       state.isAuthenticated = false;
+      state.isLoading = false;
     },
     [fetchUserByJWT.fulfilled.type]: (state, action) => {
       state.user = action.payload.user;
       state.isAuthenticated = true;
+      state.isLoading = false;
     },
-    [fetchUserByJWT.fulfilled.type]: (state) => {
+    [fetchUserByJWT.rejected.type]: (state) => {
       state.user = null;
       state.isAuthenticated = false;
+      state.isLoading = false;
     },
   },
 });
