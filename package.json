@@ -2,7 +2,10 @@
   "name": "mcitmocks",
   "version": "1.0.0",
   "scripts": {
-    "start": "ts-node index"
+    "dev": "ts-node-dev index",
+    "start": "ts-node index",
+    "db:migrate": "prisma migrate deploy",
+    "db:generate": "prisma generate"
   },
   "dependencies": {
     "@prisma/client": "2.23.0",
@@ -22,6 +25,7 @@
     "@types/jsonwebtoken": "8.5.1",
     "@types/node": "12.0.0",
     "prisma": "2.23.0",
+    "ts-node-dev": "1.1.6",
     "typescript": "4.1.2"
   }
 }
