@@ -7,5 +7,5 @@
     "strict": true,
     "typeRoots": ["@types"]
   },
-  "lib": ["es2015"]
+  "lib": ["es2015","es2018.promise"]
 }
