@@ -20,4 +20,4 @@ RUN if [ "$ENV" = "production" ] ; then cd client && yarn build; fi
 RUN chmod +x entrypoint.sh
 ENTRYPOINT [ "sh", "entrypoint.sh" ]
 
-CMD if [ "$ENV" = "production" ] ; then yarn yarn start; else yarn dev; fi
+CMD if [ "$ENV" = "production" ] ; then yarn start; else yarn dev; fi
