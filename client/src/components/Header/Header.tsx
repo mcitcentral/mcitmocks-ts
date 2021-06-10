@@ -1,11 +1,8 @@
 import React from "react";
-import { useDispatch, useSelector, useStore } from "react-redux";
 import GoogleLogin from "react-google-login";
 import { FcGoogle } from "react-icons/fc";
 
-import { fetchUserByAccessToken } from "../../store/authReducer";
 import "./Header.scss";
-import { RootState } from "../../store";
 
 interface LoginButtonProps {
   onClick: () => void;
@@ -21,13 +18,13 @@ const LoginButton: React.FC<LoginButtonProps> = ({ onClick, disabled }) => {
   );
 };
 
-const Header: React.FC<{}> = () => {
-  const dispatch = useDispatch();
-  const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
+export interface HeaderProps {
+  isAuthenticated: boolean;
+  onLogin: (accessToken: string) => void;
+}
 
-  const onSuccess = async (res: any) => {
-    dispatch(fetchUserByAccessToken(res.tokenId));
-  };
+const Header: React.FC<HeaderProps> = ({ isAuthenticated, onLogin }) => {
+  const onSuccess = async (res: any) => onLogin(res.tokenId);
 
   return (
     <header className="header">
