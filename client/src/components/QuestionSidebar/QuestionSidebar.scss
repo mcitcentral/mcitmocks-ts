@@ -1,0 +1,55 @@
+@import "../../styles/Variables.scss";
+
+.questionSidebar {
+  max-width: 300px;
+  padding: 30px;
+  border-right: 1px solid $gray-100;
+  &__top {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  &__tags {
+    display: flex;
+    flex-direction: row;
+    flex-flow: wrap;
+    gap: 10px;
+  }
+  &__toggleAnswerButton {
+    font-family: "Inter", monospace;
+    font-size: 12px;
+    background-color: $gray-100;
+    padding: 0 15px;
+    border-radius: 5px;
+  }
+  h2 {
+    font-family: "Inter", sans-serif;
+    font-weight: 500;
+    font-size: 24px;
+  }
+  h3 {
+    font-family: "IBM Plex Mono", monospace;
+    font-weight: 600;
+    font-size: 12px;
+    text-transform: uppercase;
+  }
+  p,
+  li {
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
+  }
+  pre {
+    background-color: $gray-100;
+    padding: 15px;
+    code {
+      font-family: "IBM Plex Mono", monospace;
+      line-height: 1.3em;
+      font-size: 14px;
+    }
+  }
+  hr {
+    margin: 25px 0;
+    outline: none;
+    border: 1px solid $gray-100;
+  }
+}
