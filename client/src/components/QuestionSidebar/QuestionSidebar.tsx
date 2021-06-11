@@ -25,7 +25,7 @@ const QuestionSidebar: React.FC<QuestionSidebarProps> = ({ question, isInterview
         <h3>QUESTION</h3>
         {isInterviewer && (
           <button className="questionSidebar__toggleAnswerButton" onClick={toggleShowAnswer}>
-            Toggle Answer
+            {showAnswer ? "Toggle Question" : "Toggle Answer"}
           </button>
         )}
       </div>
