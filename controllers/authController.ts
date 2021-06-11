@@ -1,6 +1,5 @@
 import { PrismaClient } from ".prisma/client";
 import express, { Request, Response } from "express";
-import jwt from "express-jwt";
 
 import { PostTokenRequest } from "../@types";
 import UserRepository from "../models/UserRepository";
@@ -10,15 +9,6 @@ export default function authController(prismaClient: PrismaClient) {
   const authRouter = express.Router();
   const authService = new AuthService(prismaClient);
   const userRepository = new UserRepository(prismaClient);
-
-  authRouter.use(
-    jwt({
-      secret: process.env.JWT_TOKEN_KEY!,
-      algorithms: ["HS256"],
-      credentialsRequired: false,
-      getToken: (req) => req.cookies.mcitmocks,
-    }).unless({ path: ["/token"] })
-  );
 
   authRouter.post("/token", async (req: Request<{}, {}, PostTokenRequest>, res: Response) => {
     try {
