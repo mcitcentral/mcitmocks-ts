@@ -1,16 +1,17 @@
 import { PrismaClient } from "@prisma/client";
 import AuthService from "../../services/AuthService";
 
-export default async function main() {
-  const prismaClient = new PrismaClient();
-  const authService = new AuthService(prismaClient);
+const prisma = new PrismaClient();
 
-  await prismaClient.user.deleteMany({});
+export default async function main() {
+  const authService = new AuthService(prisma);
+
+  await prisma.user.deleteMany({});
 
   const [userAlice, userBob, userSam] = await Promise.all([
-    prismaClient.user.create({ data: { id: "1", email: "alice@gmail.com", timeZone: "America/Chicago" } }),
-    prismaClient.user.create({ data: { id: "2", email: "bob@gmail.com", timeZone: "America/New_York" } }),
-    prismaClient.user.create({ data: { id: "3", email: "sam@gmail.com", timeZone: "America/Los_Angeles" } }),
+    prisma.user.create({ data: { id: "1", email: "alice@gmail.com", timeZone: "America/Chicago" } }),
+    prisma.user.create({ data: { id: "2", email: "bob@gmail.com", timeZone: "America/New_York" } }),
+    prisma.user.create({ data: { id: "3", email: "sam@gmail.com", timeZone: "America/Los_Angeles" } }),
   ]);
 
   const jwtAlice = authService.generateJWT(userAlice);
@@ -19,7 +20,14 @@ export default async function main() {
 
   console.log({ jwtAlice, jwtBob, jwtSam });
 
-  await prismaClient.$disconnect();
+  await prisma.$disconnect();
 }
 
-main();
+main()
+  .catch((e) => {
+    console.error(e);
+    process.exit(1);
+  })
+  .finally(async () => {
+    await prisma.$disconnect();
+  });

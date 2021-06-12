@@ -4,7 +4,7 @@
   "scripts": {
     "start": "ts-node index",
     "test": "jest --testTimeout=10000",
-    "db:seed": "ts-node prisma/seeds/index"
+    "db:seed": "prisma db seed --preview-feature"
   },
   "dependencies": {
     "@prisma/client": "2.23.0",
