@@ -1,0 +1,24 @@
+@import "../../styles/Variables.scss";
+
+.questionDifficultyTag {
+  border-radius: 5px;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 12px;
+  width: 75px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &[data-type="EASY"] {
+    background-color: $green-100;
+    color: $green-600;
+  }
+  &[data-type="MEDIUM"] {
+    background-color: $yellow-100;
+    color: $yellow-600;
+  }
+  &[data-type="HARD"] {
+    background-color: $red-100;
+    color: $red-600;
+  }
+}
