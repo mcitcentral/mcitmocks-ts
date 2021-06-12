@@ -11,7 +11,8 @@
     "react-icons": "4.2.0",
     "react-redux": "7.2.4",
     "react-router-dom": "5.2.0",
-    "react-scripts": "4.0.3"
+    "react-scripts": "4.0.3",
+    "showdown": "1.9.1"
   },
   "devDependencies": {
     "@storybook/addon-actions": "6.2.9",
@@ -28,6 +29,7 @@
     "@types/react": "17.0.0",
     "@types/react-dom": "17.0.0",
     "@types/react-router-dom": "5.1.7",
+    "@types/showdown": "1.9.3",
     "cypress": "7.4.0",
     "node-sass": "6.0.0",
     "storybook": "6.2.9",
