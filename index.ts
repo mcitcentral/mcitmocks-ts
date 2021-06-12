@@ -23,3 +23,5 @@ app.use((err: Error, _req: Request, res: Response) => {
 app.listen(port, () => {
   console.log(`mcitmocks server started at localhost:${port}`);
 });
+
+export default app;

@@ -3,7 +3,7 @@ import { readdirSync, readFileSync } from "fs";
 import path from "path";
 import InterviewQuestionRepository from "../../models/InterviewQuestionRepository";
 
-async function main() {
+export default async function main() {
   const prismaClient = new PrismaClient();
   const questionRepo = new InterviewQuestionRepository(prismaClient);
 
