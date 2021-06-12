@@ -2,11 +2,12 @@
   "name": "mcitmocks",
   "version": "1.0.0",
   "scripts": {
-    "start": "ts-node index"
+    "start": "ts-node index",
   },
   "dependencies": {
     "@prisma/client": "2.23.0",
     "cookie-parser": "1.4.5",
+    "date-fns": "2.22.1",
     "dotenv": "10.0.0",
     "express": "4.17.1",
     "express-jwt": "6.0.0",

@@ -1,3 +1,5 @@
+import { Interview, InterviewStatus } from "@prisma/client";
+
 export interface JWTToken {
   id: string;
   email: string;
@@ -11,6 +13,26 @@ export interface PostTokenRequest {
 
 export interface JwtRequest {
   jwt: string;
+}
+
+export interface Interviews {
+  interviewsAsInviter: Interview[];
+  interviewsAsInvitee: Interview[];
+}
+
+export interface GetInterviewReseponse {
+  interviewsAsInviter: Interview[];
+  interviewsAsInvitee: Interview[];
+}
+
+export interface CreateInterviewRequest {
+  // TODO: Update to use availabilityId only to not reveal userId to others
+  inviteeId: string;
+  startTime: string;
+}
+
+export interface UpdateInterviewRequest {
+  status: InterviewStatus;
 }
 
 declare global {
