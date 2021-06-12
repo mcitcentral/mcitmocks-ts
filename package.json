@@ -2,7 +2,7 @@
   "name": "mcitmocks",
   "version": "1.0.0",
   "scripts": {
-    "start": "ts-node index",
+    "start": "ts-node index"
   },
   "dependencies": {
     "@prisma/client": "2.23.0",
