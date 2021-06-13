@@ -13,11 +13,17 @@ generator client {
 model User {
   id       String  @id
   email    String
-  timeZone String? @map("time_zone")
+  name     String
+  timeZone String  @default("America/New_York") @map("time_zone")
+  imageUrl String? @map("image_url")
 
   availability        Availability[]
-  interviewsAsInvitee Interview[]    @relation("Invitee")
-  interviewsAsInviter Interview[]    @relation("Inviter")
+  interviewsAsInvitee Interview[]        @relation("Invitee")
+  interviewsAsInviter Interview[]        @relation("Inviter")
+  questionTypes       QuestionType[]     @map("question_types")
+  questionDifficulty  QuestionDifficulty @default(EASY) @map("question_difficulty")
+  codingLanguage      CodingLanguage[]   @map("coding_languages")
+
   @@map(name: "users")
 }
 
@@ -67,4 +73,12 @@ enum QuestionType {
   LINKED_LIST
 
   @@map("question_type")
+}
+
+enum CodingLanguage {
+  PYTHON
+  JAVA
+  JAVASCRIPT
+
+  @@map("coding_language")
 }
