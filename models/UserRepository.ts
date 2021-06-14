@@ -18,7 +18,9 @@ export default class UserRepository {
     if (user) return user;
     else {
       const email = payload.email!;
-      const newUser = await this.prisma.user.create({ data: { id, email } });
+      const name = payload.name!;
+      const imageUrl = payload.picture;
+      const newUser = await this.prisma.user.create({ data: { id, email, name, imageUrl } });
       return newUser;
     }
   }
