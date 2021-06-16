@@ -4,6 +4,7 @@
   "scripts": {
     "start": "ts-node index",
     "test": "jest --testTimeout=10000",
+    "db:reset": "prisma migrate reset",
     "db:seed": "prisma db seed --preview-feature"
   },
   "dependencies": {
