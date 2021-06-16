@@ -38,13 +38,14 @@ model Availability {
 }
 
 model Interview {
-  id          String   @id
-  inviterId   String   @map("inviter_id")
-  inviter     User     @relation("Inviter", fields: [inviterId], references: [id])
-  inviteeId   String   @map("invitee_id")
-  invitee     User     @relation("Invitee", fields: [inviteeId], references: [id])
-  startTime   DateTime @map("start_time")
-  isConfirmed Boolean  @default(false) @map("is_confirmed")
+  id        String              @id @default(uuid())
+  inviterId String              @map("inviter_id")
+  inviter   User                @relation("Inviter", fields: [inviterId], references: [id])
+  inviteeId String              @map("invitee_id")
+  invitee   User                @relation("Invitee", fields: [inviteeId], references: [id])
+  startTime DateTime            @map("start_time")
+  status    InterviewStatus     @default(NOT_INITIALIZED)
+  questions InterviewQuestion[]
 
   @@map(name: "interviews")
 }
@@ -56,6 +57,7 @@ model InterviewQuestion {
   answerText         String             @map("answer_text")
   questionDifficulty QuestionDifficulty @map("question_difficulty")
   questionType       QuestionType[]     @map("question_type")
+  interviews         Interview[]
 
   @@map(name: "interview_questions")
 }
@@ -73,6 +75,16 @@ enum QuestionType {
   LINKED_LIST
 
   @@map("question_type")
+}
+
+enum InterviewStatus {
+  NOT_INITIALIZED
+  INVITED
+  CONFIRMED
+  COMPLETED
+  CANCELLED
+
+  @@map("interview_status")
 }
 
 enum CodingLanguage {
