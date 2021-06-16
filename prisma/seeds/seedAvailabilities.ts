@@ -1,0 +1,59 @@
+import { PrismaClient } from '@prisma/client'
+import path from "path";
+import AvailabilityRepository from "../../models/AvailabilityRepository";
+
+//// Instantiate Prisma Client
+const prisma = new PrismaClient()
+
+/*export default async function main(){
+    //just for testing purpose
+    await prisma.availability.deleteMany({})
+
+
+    const availability= await prisma.availability.create({
+        data:[{
+           
+                    id:'11',
+                    userId: '1',
+                    startTime:new Date(2021,6,20,10,30,30,80),
+                    isTaken: true
+                },
+                {
+                    id:'12',
+                    userId: '2',
+                    startTime:new Date(2021,6,25,11,30,30,80),
+                    isTaken: true
+                },],
+
+        /*include: {
+            availability: true,
+        },
+    })*/
+
+export default async function main(){
+    const availability1 = await prisma.availability.upsert({
+        where: {id:'11'},
+        create:{
+            id: '11',
+            user:{connect:{id:'2'}},
+            startTime: new Date(2021,6,20,10,30,30,80),
+            isTaken: true,
+        },
+        update:{
+        user:{connect:{id:'2'}},
+        startTime: new Date(2021,6,20,10,30,30,80),
+        isTaken: true,},
+        
+    })
+    console.log(availability1)
+}
+
+main()
+  .catch((e: Error) => {
+    console.error(e)
+    process.exit(1)
+  })
+  .finally(async () => {
+    // Disconnect Prisma Client
+    await prisma.$disconnect()
+  })
