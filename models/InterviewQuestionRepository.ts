@@ -31,11 +31,10 @@ export default class InterviewQuestionRepoistory {
     const questionType = questionParsed.data.types.map((type: string) => typeMap[type]);
     const answerText = answerParsed.content;
 
-    const interviewQuestion = await this.prisma.interviewQuestion.upsert({
+    await this.prisma.interviewQuestion.upsert({
       where: { id },
       update: { questionName, questionText, questionDifficulty, questionType, answerText },
       create: { id, questionName, questionText, questionDifficulty, questionType, answerText },
     });
-    console.log(interviewQuestion);
   }
 }
