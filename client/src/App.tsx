@@ -6,6 +6,8 @@ import { fetchUserByJWT } from "./store/authReducer";
 import IndexPage from "./pages/IndexPage";
 import DashboardPage from "./pages/DashboardPage";
 import LoadingPage from "./pages/LoadingPage";
+import InterviewPage from "./pages/InterviewPage";
+
 import "./styles/Reset.scss";
 import "./styles/App.scss";
 import { RootState } from "./store";
@@ -24,6 +26,7 @@ const App: React.FC = () => {
     <Router>
       <Switch>
         <Route path="/dashboard">{isAuthenticated ? <DashboardPage /> : <Redirect to="/" />}</Route>
+        <Route path="/interviews/:interviewId">{<InterviewPage />}</Route>
         <Route path="/">
           <IndexPage />
         </Route>

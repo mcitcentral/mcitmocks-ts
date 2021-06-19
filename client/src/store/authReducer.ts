@@ -1,3 +1,4 @@
+import { User } from "@prisma/client";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import apiClient from "../lib/apiClient";
 
@@ -11,7 +12,7 @@ export const fetchUserByJWT = createAsyncThunk("auth/fetchUserByJWT", async () =
 
 const authSlice = createSlice({
   name: "auth",
-  initialState: { user: null, isLoading: true, isAuthenticated: false },
+  initialState: { user: null as User | null, isLoading: true, isAuthenticated: false },
   reducers: {
     setUser(state, action) {
       if (action.payload) {

@@ -11,6 +11,10 @@ const apiClient = {
     const response = await axios.get("/auth/user");
     return response.data;
   },
+  getInterview: async (interviewId: string) => {
+    const response = await axios.get(`/interviews/${interviewId}`);
+    return response.data;
+  },
 };
 
 export default apiClient;

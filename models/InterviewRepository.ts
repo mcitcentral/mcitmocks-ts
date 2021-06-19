@@ -9,7 +9,10 @@ export default class InterviewRepository {
   }
 
   async getInterviewById(interviewId: string): Promise<Interview> {
-    const interview = await this.prisma.interview.findUnique({ where: { id: interviewId } });
+    const interview = await this.prisma.interview.findUnique({
+      where: { id: interviewId },
+      include: { questions: true },
+    });
     if (!interview) throw new Error("Error: interviewId not found");
     return interview;
   }
