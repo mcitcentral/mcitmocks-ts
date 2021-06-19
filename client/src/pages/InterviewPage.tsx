@@ -5,6 +5,7 @@ import { shallowEqual, useDispatch, useSelector } from "react-redux";
 
 import AceEditor from "react-ace";
 import "ace-builds/webpack-resolver";
+import "ace-builds/src-noconflict/ext-language_tools";
 
 import { fetchInterview, setCode, setInterviewId } from "../store/interviewReducer";
 import QuestionSidebar from "../components/QuestionSidebar";
@@ -26,7 +27,8 @@ const InterviewPage: React.FC<{}> = () => {
   }, [dispatch, interviewId]);
 
   useEffect(() => {
-    if (user?.id === interviewState.interview?.inviteeId) setIsInterviewer(true);
+    // TODO: Figure out how to switch in between?
+    if (user?.id === interviewState.interview?.inviterId) setIsInterviewer(true);
   }, [interviewState.interview, user]);
 
   useEffect(() => {
@@ -47,6 +49,7 @@ const InterviewPage: React.FC<{}> = () => {
     if (socket) socket.emit("update", { roomId: interviewId, message: value });
   };
 
+  // TODO: Push global notification before redirect
   if (interviewState.redirect) return <Redirect to="/" />;
   if (interviewState.isLoading || !interviewState.interview) return <LoadingPage />;
 
