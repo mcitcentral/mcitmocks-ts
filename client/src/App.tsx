@@ -26,7 +26,7 @@ const App: React.FC = () => {
     <Router>
       <Switch>
         <Route path="/dashboard">{isAuthenticated ? <DashboardPage /> : <Redirect to="/" />}</Route>
-        <Route path="/interviews/:interviewId">{<InterviewPage />}</Route>
+        <Route path="/interviews/:interviewId">{isAuthenticated ? <InterviewPage /> : <Redirect to="/" />}</Route>
         <Route path="/">
           <IndexPage />
         </Route>
