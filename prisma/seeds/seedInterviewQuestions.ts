@@ -3,9 +3,7 @@ import { readdirSync, readFileSync } from "fs";
 import path from "path";
 import InterviewQuestionRepository from "../../models/InterviewQuestionRepository";
 
-const prisma = new PrismaClient();
-
-export default async function main() {
+export default async function main(prisma: PrismaClient) {
   const questionRepo = new InterviewQuestionRepository(prisma);
 
   const files = readdirSync("./data/questions");
@@ -16,12 +14,3 @@ export default async function main() {
     await questionRepo.createOrUpdateFromMarkdown(id, questionFile, answerFile);
   }
 }
-
-main()
-  .catch((e) => {
-    console.error(e);
-    process.exit(1);
-  })
-  .finally(async () => {
-    await prisma.$disconnect();
-  });
