@@ -12,7 +12,7 @@ const renderDays = (firstDate:Date,dayInfo:dayProps[])=>{
     const month = firstDate.getMonth();
     const firstDay = firstDate.getDate();
     for(var i = 6; i >= 0; i--) {
-        days.push(<Day {...{date: new Date(year,month,firstDay+i),availableTime:dayInfo[i].availableTime,invitedInterviews:dayInfo[i].invitedInterviews,confirmedInterviews:dayInfo[i].confirmedInterviews,receivedInterviews:dayInfo[i].receivedInterviews}}/>);
+        days.push(<Day {...{date: new Date(year,month,firstDay+i),availableTime:dayInfo[i].availableTime,interviews:dayInfo[i].interviews}}/>);
     }
     return days;
 }

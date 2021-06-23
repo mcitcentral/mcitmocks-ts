@@ -19,32 +19,89 @@ export const Available = Template.bind({});
 Available.args = {
   /*👇 The args you need here will depend on your component */
   startTime: new Date(),
-  isAvailable: true
+  interview: undefined,
+  availability: new Date(),
+
 };
 
 export const NullAvail = Template.bind({});
 NullAvail.args = {
     startTime: new Date(),
-    isAvailable:false,
+    interview: undefined,
+    availability: undefined,
 }
 
 export const Confirmed = Template.bind({});
 Confirmed.args = {
     startTime: new Date(),
-    isConfirmed: true,
-    withWhom: 'John Smith'
+    interview: {
+      id: '000',
+      inviterId: 'a', // Represents inviter
+      inviter: {
+        id: 'a',
+        name: 'Michael Jackson',
+        timeZone: 'America/New York',
+        email: 'xx@gmail.com'
+      },
+      inviteeId: 'b',
+      invitee: {
+        id: 'b',
+        name: 'John Smith',
+        timeZone: 'America/New York',
+        email: 'yy@gmail.com'
+      }, // Represents invitee
+      startTime: new Date().toISOString(), // ISO DateTime string in UTC (on the hour)
+      status: 'CONFIRMED',
+    },
+    availability: undefined,
 }
 
 export const ReceivedFrom = Template.bind({});
 ReceivedFrom.args = {
     startTime: new Date(),
-    withWhom:'John Smith'
+    interview: {
+      id: '001',
+      inviteeId: 'a', // Represents inviter
+      invitee: {
+        id: 'a',
+        name: 'Michael Jackson',
+        timeZone: 'America/New York',
+        email: 'xx@gmail.com'
+      },
+      inviterId: 'b',
+      inviter: {
+        id: 'b',
+        name: 'John Smith',
+        timeZone: 'America/New York',
+        email: 'yy@gmail.com'
+      }, // Represents invitee
+      startTime: new Date().toISOString(), // ISO DateTime string in UTC (on the hour)
+      status: 'INVITED',
+    },
+    availability: undefined,
 }
 
 export const Invited = Template.bind({});
 Invited.args = {
     startTime: new Date(),
-    isAvailable: null,
-    asInviter: true,
-    withWhom:'John Smith'
+    interview: {
+      id: '002',
+      inviterId: 'a', // Represents inviter
+      inviter: {
+        id: 'a',
+        name: 'Michael Jackson',
+        timeZone: 'America/New York',
+        email: 'xx@gmail.com'
+      },
+      inviteeId: 'b',
+      invitee: {
+        id: 'b',
+        name: 'John Smith',
+        timeZone: 'America/New York',
+        email: 'yy@gmail.com'
+      }, // Represents invitee
+      startTime: new Date().toISOString(), // ISO DateTime string in UTC (on the hour)
+      status: 'INVITED',
+    },
+    availability: undefined,
 }

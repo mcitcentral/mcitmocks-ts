@@ -1,67 +1,58 @@
 import React, { useState } from "react";
-import "./TimeBlock.css";
+import "./TimeBlock.scss";
 import { FaRegCalendar, FaRegEnvelope, FaInbox } from "react-icons/fa";
 import { useEffect } from "react";
 import { parseISO,format } from 'date-fns';
+import { Interview } from "../Day/Day";
+import { RootState } from "../../../store";
+import { useSelector } from "react-redux";
+import {User} from "../Day/Day";
+
+
+
 
 export interface timeProps {
   startTime: Date;
-  isAvailable?: boolean | null;
-  isConfirmed?: boolean | null;
-  withWhom?: string | null;
-  asInviter?: boolean | null;
+  interview: Interview | undefined;
+  availability: Date | undefined;
 }
 
+ 
 
-const TimeBlock: React.FC<timeProps> = ({ isAvailable, isConfirmed, withWhom, asInviter, startTime}) => {
-    const [availability,setAvailability]  = useState(isAvailable);
+const TimeBlock: React.FC<timeProps> = ({ interview, startTime, availability}) => {
+    //const [availability,setAvailability]  = useState(isAvailable);
+
+    //const curUser = useSelector((state: RootState) => state.auth.user);
+    const curUser:User = {id:'a',email: 'xx@gmail.com',timeZone:'American/New York',name: 'Michael Jackson'};
     const hourStr = format(startTime, 'HH');
     const period = format(startTime, 'aa');
+    let status = "";
+    let msg = "";
+    let icon = null;
+    if(availability !== undefined) {
+        msg = "I'm available";
+        status = 'AVAILABLE';
+    } else if(interview !== undefined) {
+        status = interview.status;
+        icon = status == 'CONFIRMED'? <FaRegCalendar />: interview.inviterId === curUser.id?<FaRegEnvelope /> : <FaInbox />;
+        msg = interview.inviterId === curUser.id? interview.invitee.name : interview.inviter.name;
+    } else {
+        status = 'NAVAILABLE';
+    }
     
-    return isAvailable ? (
-        <button className="calendar-event-available" onClick={()=>setAvailability(false)} >
-            <div className="calendar-available-rectangle"></div>
+    
+    
+    return (
+        <button className="calendar-out" data-type = {status} onClick={()=>{}}>
+            <div className="calendar-rectangle"></div>
             <div className="calendar-event-info">
                 <div className="calendar-event-time">{hourStr}:00 {period}</div>
-                <div className="calendar-event-title">I'm available!</div>
+                <div className="calendar-event-icon">{icon}</div>
+                <div className="calendar-event-title">{msg}</div>
             </div>
         </button>
 
-    )   : isConfirmed ? (
-        <button className="calendar-event-confirmed" onClick={()=>{alert('Are you sure you want to cancel the interview?')}}>
-            <div className="calendar-confirmed-rectangle"></div>
-            <div className="calendar-event-info">
-                <div className="calendar-event-time">{hourStr}:00 {period}</div>
-                <div className="calendar-event-icon"><FaRegCalendar /></div>
-                <div className="calendar-event-title">{withWhom}</div>
-            </div>
-        </button>
-    )   : asInviter? (
-        <button className="calendar-event-request" onClick={()=>{}}>
-            <div className="calendar-request-rectangle"></div>
-            <div className="calendar-event-info">
-                <div className="calendar-event-time">{hourStr}:00 {period}</div>
-                <div className="calendar-event-icon"><FaRegEnvelope /></div>
-                <div className="calendar-event-title">{withWhom}</div>
-            </div>
-        </button>
-    )   : isAvailable == null? (
-        <button className="calendar-event-request" onClick={()=>{}}>
-            <div className="calendar-request-rectangle"></div>
-            <div className="calendar-event-info">
-                <div className="calendar-event-time">{hourStr}:00 {period}</div>
-                <div className="calendar-event-icon"><FaInbox /></div>
-                <div className="calendar-event-title">{withWhom}</div>
-            </div>
-        </button>
-    )   : (
-        <button className="calendar-event-navailable" onClick={()=>setAvailability(true)}>
-            <div className="calendar-navailable-rectangle"></div>
-            <div className="calendar-event-info">
-                <div className="calendar-event-time">{hourStr}:00 {period}</div>
-            </div>
-        </button>
-    )
+    )   
 };
 
 export default TimeBlock;

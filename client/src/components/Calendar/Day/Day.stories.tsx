@@ -19,30 +19,66 @@ export const day1 = Template.bind({});
 day1.args = {
   /*👇 The args you need here will depend on your component */
   date: new Date(2021,5,17),
-  availableTime: new Map([[2,new Date(2021,5,17,2)],[3,new Date(2021,5,17,3)]]),
-  confirmedInterviews: new Map([[6,{
+  availableTime: new Map([[8,new Date(2021,5,17,8)],[9,new Date(2021,5,17,9)]]),
+  interviews: new Map([[10,{
     id: '001',
-    status: 'CONFIRMED',
-    inviterId: 'a', // Represents inviter
-    inviteeId: 'b', // Represents invitee
-    startTime: '2021-06-16T05:00:00.000Z', // ISO DateTime string in UTC (on the hour)
-    isConfirmed: true,
- }]]),
-  invitedInterviews:new Map([[7,{
+    inviteeId: 'a', // Represents inviter
+    invitee: {
+      id: 'a',
+      name: 'Michael Jackson',
+      timeZone: 'America/New York',
+      email: 'xx@gmail.com'
+    },
+    inviterId: 'b',
+    inviter: {
+      id: 'b',
+      name: 'John Smith',
+      timeZone: 'America/New York',
+      email: 'yy@gmail.com'
+    }, // Represents invitee
+    startTime: new Date(2021,5,17,10).toISOString(), // ISO DateTime string in UTC (on the hour)
+    status: 'INVITED',
+  }],
+  [11,{
     id: '002',
-    status: 'INVITED',
     inviterId: 'a', // Represents inviter
-    inviteeId: 'b', // Represents invitee
-    startTime: '2021-06-16T07:00:00.000Z', // ISO DateTime string in UTC (on the hour)
-    isConfirmed: false,
-  }]]),
-  receivedInterviews:new Map([[8,{
-    id: '003',
-    status: 'INVITED',
-    inviterId: 'c', // Represents inviter
+    inviter: {
+      id: 'a',
+      name: 'Michael Jackson',
+      timeZone: 'America/New York',
+      email: 'xx@gmail.com'
+    },
     inviteeId: 'b',
-    startTime: '2021-06-16T08:00:00.000Z', // ISO DateTime string in UTC (on the hour)
-    isConfirmed: false,
-  }]])
+    invitee: {
+      id: 'b',
+      name: 'John Smith',
+      timeZone: 'America/New York',
+      email: 'yy@gmail.com'
+    }, // Represents invitee
+    startTime: new Date().toISOString(), // ISO DateTime string in UTC (on the hour)
+    status: 'INVITED',
+  }],
+    [12, {
+      id: '000',
+      inviterId: 'a', // Represents inviter
+      inviter: {
+        id: 'a',
+        name: 'Michael Jackson',
+        timeZone: 'America/New York',
+        email: 'xx@gmail.com'
+      },
+      inviteeId: 'b',
+      invitee: {
+        id: 'b',
+        name: 'John Smith',
+        timeZone: 'America/New York',
+        email: 'yy@gmail.com'
+      }, // Represents invitee
+      startTime: new Date(2021,5,17,12).toISOString(), // ISO DateTime string in UTC (on the hour)
+      status: 'CONFIRMED',
+    }]
+  ]),
+  
+  
 };
 
