@@ -27,7 +27,7 @@ export default class UserRepository {
     }
   }
 
-  async updateUserById(id: string, preferences: Partial<UserPreferences>): Promise<User> {
+  async updateUserById(id: string, preferences: Partial<UserPreferences>): Promise<User | null> {
     return await this.prisma.user.update({ where: { id }, data: preferences });
   }
 }
