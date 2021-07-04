@@ -1,4 +1,4 @@
-import { Interview, InterviewStatus } from "@prisma/client";
+import { Interview, InterviewStatus, User } from "@prisma/client";
 
 export interface JWTToken {
   id: string;
@@ -34,6 +34,10 @@ export interface CreateInterviewRequest {
 export interface UpdateInterviewRequest {
   status: InterviewStatus;
 }
+
+export type UserPreferences = Omit<User, "id" | "name" | "email" | "imageUrl">;
+
+export type UpdateUserPreferencesRequest = UserPreferences;
 
 declare global {
   namespace Express {
