@@ -15,7 +15,7 @@ export default class AvailabilityRepository {
           lt: new Date(endTime),
         },
 
-        isTaken: true,
+        isTaken: false,
       },
     });
     return availability;
