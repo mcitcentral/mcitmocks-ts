@@ -20,7 +20,7 @@ export interface Interviews {
   interviewsAsInvitee: Interview[];
 }
 
-export interface GetInterviewReseponse {
+export interface GetInterviewResponse {
   interviewsAsInviter: Interview[];
   interviewsAsInvitee: Interview[];
 }
