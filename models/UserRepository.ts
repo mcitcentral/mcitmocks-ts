@@ -27,7 +27,9 @@ export default class UserRepository {
     }
   }
 
-  async updateUserById(id: string, preferences: Partial<UserPreferences>): Promise<User | null> {
-    return await this.prisma.user.update({ where: { id }, data: preferences });
+  async updateUserById(id: string, preferences: Partial<UserPreferences>): Promise<User> {
+    const user = await this.prisma.user.update({ where: { id }, data: preferences });
+    if (!user) throw new Error("User not found");
+    return user;
   }
 }
