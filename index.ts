@@ -9,6 +9,7 @@ import { Socket } from "socket.io";
 
 import authController from "./controllers/authController";
 import interviewController from "./controllers/interviewController";
+import userController from "./controllers/userController";
 
 const port = process.env.PORT || 8000;
 const app = express();
@@ -28,6 +29,7 @@ app.use(
 
 app.use("/api/auth", authController(prismaClient));
 app.use("/api/interviews", interviewController(prismaClient));
+app.use("/api/users", userController(prismaClient));
 
 app.use((err: Error, _req: Request, res: Response) => {
   if (err.name === "UnauthorizedError") res.status(401).send("Unauthorized token");

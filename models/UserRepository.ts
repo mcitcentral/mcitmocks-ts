@@ -1,5 +1,6 @@
 import { PrismaClient, User } from ".prisma/client";
 import { TokenPayload } from "google-auth-library";
+import { UserPreferences } from "../@types";
 
 export default class UserRepository {
   prisma: PrismaClient;
@@ -23,5 +24,11 @@ export default class UserRepository {
       const newUser = await this.prisma.user.create({ data: { id, email, name, imageUrl } });
       return newUser;
     }
+  }
+
+  async updateUserById(id: string, preferences: Partial<UserPreferences>): Promise<User> {
+    const user = await this.prisma.user.update({ where: { id }, data: preferences });
+    if (!user) throw new Error("User not found");
+    return user;
   }
 }
