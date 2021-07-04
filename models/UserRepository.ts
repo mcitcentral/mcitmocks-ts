@@ -1,5 +1,4 @@
 import { PrismaClient, User } from ".prisma/client";
-import { CodingLanguage, QuestionDifficulty, QuestionType } from "@prisma/client";
 import { TokenPayload } from "google-auth-library";
 import { UserPreferences } from "../@types";
 
