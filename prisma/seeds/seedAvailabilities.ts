@@ -9,12 +9,12 @@ export default async function main(prisma: PrismaClient) {
       id: "11",
       user: { connect: { id: "2" } },
       startTime: new Date(2021, 6, 20, 10, 30, 30, 80),
-      isTaken: true,
+      isTaken: false
     },
     update: {
       user: { connect: { id: "2" } },
       startTime: new Date(2021, 6, 20, 10, 30, 30, 80),
-      isTaken: true,
+      isTaken: false,
     },
   });
   console.log(availability1);
