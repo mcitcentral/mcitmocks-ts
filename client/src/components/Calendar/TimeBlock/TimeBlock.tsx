@@ -20,8 +20,7 @@ export interface timeProps {
  
 
 const TimeBlock: React.FC<timeProps> = ({ interview, startTime, availability}) => {
-    //const [availability,setAvailability]  = useState(isAvailable);
-
+    
     //const curUser = useSelector((state: RootState) => state.auth.user);
     const curUser:User = {id:'a',email: 'xx@gmail.com',timeZone:'American/New York',name: 'Michael Jackson'};
     const hourStr = format(startTime, 'HH');
@@ -40,10 +39,9 @@ const TimeBlock: React.FC<timeProps> = ({ interview, startTime, availability}) =
         status = 'NAVAILABLE';
     }
     
-    
-    
+
     return (
-        <button className="calendar-out" data-type = {status} onClick={()=>{}}>
+        <button className="calendar-out" data-type = {status} >
             <div className="calendar-rectangle"></div>
             <div className="calendar-event-info">
                 <div className="calendar-event-time">{hourStr}:00 {period}</div>
