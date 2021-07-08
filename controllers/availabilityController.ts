@@ -11,14 +11,13 @@ export default function availabilityController(prismaClient: PrismaClient) {
       let endTime = req.query.endTime || new Date();
       if (!req.user) return res.status(401).send({ error: "Not Authenticated." });
       const newEndTime = new Date();
-      /*if (startTime == null || endTime == null) {
-        const newStartTime = subDays(new Date(), 7);
-        const availability = await availabilityRepository.getAvailability(
+      if (startTime == null || endTime == null) {
+        //const newStartTime = subDays(new Date(), 7);
+        const availability = await availabilityRepository.getAvailabilityByUserId(
           req.user.id,
-          formatISO(newStartTime),
-          formatISO(newEndTime)
         );
-      }*/
+        res.status(200).json(availability);
+      }
       if (Number.isNaN(Date.parse(String(startTime))) || Number.isNaN(Date.parse(String(endTime))))
         return res.status(400).send({ error: "startTime or endTime in the wrong format." });
       const availability = await availabilityRepository.getAvailability(
