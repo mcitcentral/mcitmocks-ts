@@ -1,9 +1,10 @@
 .container {
+    font-family: "IBM Plex Mono", monospace;
     width: 1200px;
     height: 500px;
 }
 .calendar {
-
+    
     display: flex;
     flex-direction: row-reverse;
     float: left;
