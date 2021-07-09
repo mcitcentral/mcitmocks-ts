@@ -20,14 +20,4 @@ export default class AvailabilityRepository {
     });
     return availability;
   }
-
-  async getAvailabilityByUserId(userId: string) {
-    const availability = await this.prisma.availability.findMany({
-      where: {
-        userId: userId,
-        isTaken: false,
-      },
-    });
-    return availability;
-  }
 }
