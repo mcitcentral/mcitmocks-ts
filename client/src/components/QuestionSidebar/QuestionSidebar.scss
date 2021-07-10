@@ -1,0 +1,61 @@
+@import "../../styles/Variables.scss";
+
+.questionSidebar {
+  padding: 30px;
+  border-right: 1px solid $gray-100;
+  &__top {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+  &__tags {
+    display: flex;
+    flex-direction: row;
+    flex-flow: wrap;
+    gap: 10px;
+  }
+  &__toggleAnswerButton {
+    font-family: "Inter", monospace;
+    font-size: 12px;
+    background-color: $gray-100;
+    padding: 10px 15px;
+    border-radius: 5px;
+    background-color: $blue-100;
+    color: $blue-600;
+  }
+  h2 {
+    font-family: "Inter", sans-serif;
+    font-weight: 500;
+    font-size: 24px;
+    margin: 1em 0;
+  }
+  h3 {
+    font-family: "IBM Plex Mono", monospace;
+    font-weight: 600;
+    font-size: 12px;
+    text-transform: uppercase;
+  }
+  p,
+  li {
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
+    line-height: 1.3em;
+    margin: 1em 0;
+  }
+  pre {
+    margin-top: 1em;
+    background-color: $gray-100;
+    padding: 15px;
+    code {
+      font-family: "IBM Plex Mono", monospace;
+      line-height: 1.3em;
+      font-size: 14px;
+    }
+  }
+  hr {
+    margin: 25px 0;
+    outline: none;
+    border: 1px solid $gray-100;
+  }
+}

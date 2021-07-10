@@ -1,5 +1,5 @@
 import React from "react";
-import Layout from "../components/Layout";
+import Layout from "../containers/Layout";
 
 const IndexPage: React.FC<{}> = () => {
   return (
