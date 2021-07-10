@@ -1,6 +1,7 @@
 {
   "name": "mcitmocks",
   "version": "1.0.0",
+  "license": "UNLICENSED",
   "scripts": {
     "dev": "ts-node-dev index",
     "start": "ts-node index",
