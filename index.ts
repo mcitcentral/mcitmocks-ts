@@ -32,7 +32,6 @@ app.use("/api/auth", authController(prismaClient));
 app.use("/api/interviews", interviewController(prismaClient));
 app.use("/api/availability", availabilityController(prismaClient));
 app.use("/api/users", userController(prismaClient));
-app.use("/api/availability/search", availabilityController(prismaClient));
 
 app.use((err: Error, _req: Request, res: Response) => {
   if (err.name === "UnauthorizedError") res.status(401).send("Unauthorized token");
