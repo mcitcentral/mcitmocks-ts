@@ -13,7 +13,10 @@ COPY . .
 
 EXPOSE 8000
 
-RUN chmod +x entrypoint.ci.sh
-ENTRYPOINT [ "sh", "entrypoint.ci.sh" ]
+ADD https://github.com/ufoscout/docker-compose-wait/releases/download/2.9.0/wait /wait
+RUN chmod +x /wait
 
-CMD yarn start;
+ADD start.ci.sh /start.ci.sh
+RUN chmod +x /start.ci.sh
+
+CMD /wait && /start.ci.sh
