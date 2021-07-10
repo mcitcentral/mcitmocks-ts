@@ -20,4 +20,16 @@ export default class AvailabilityRepository {
     });
     return availability;
   }
+  async searchAvailability(userId: string, startTime: string) {
+    const availability = await this.prisma.availability.findMany({
+      where: {
+        NOT:{
+          userId:userId
+        },
+        startTime: startTime,
+        isTaken: false,
+      },
+    });
+    return availability;
+  }
 }
