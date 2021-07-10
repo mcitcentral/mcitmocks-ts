@@ -1,4 +1,4 @@
-import { useDispatch, useSelector, useStore } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { RootState } from "../../store";
 import Header from "../../components/Header";
@@ -14,7 +14,7 @@ const Layout: React.FC<{}> = ({ children }) => {
 
   return (
     <>
-      <Header isAuthenticated={isAuthenticated} onLogin={onLogin}/>
+      <Header isAuthenticated={isAuthenticated} onLogin={onLogin} />
       <main>{children}</main>
     </>
   );
