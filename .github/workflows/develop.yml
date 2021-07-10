@@ -16,6 +16,7 @@ jobs:
 
     env:
       JWT_TOKEN_KEY: test-secret
+      GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
 
     steps:
       - uses: actions/checkout@v2
