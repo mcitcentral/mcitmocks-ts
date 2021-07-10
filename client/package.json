@@ -75,5 +75,9 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://server:8000"
+  "proxy": "http://server:8000",
+  "engines": {
+    "node": "14.15.4",
+    "yarn": "1.22.10"
+  }
 }

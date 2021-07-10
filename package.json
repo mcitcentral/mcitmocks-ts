@@ -45,6 +45,7 @@
     "preset": "ts-jest"
   },
   "engines": {
-    "node": "14.15.4"
+    "node": "14.15.4",
+    "yarn": "1.22.10"
   }
 }
