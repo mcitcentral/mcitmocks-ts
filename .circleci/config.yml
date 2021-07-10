@@ -6,7 +6,8 @@ jobs:
       - image: cimg/node:16.4.1
     steps:
       - checkout
-      - setup_remote_docker
+      - setup_remote_docker:
+          version: 19.03.13
       - run: yarn docker:ci
       - run: yarn test
       - run: docker-compose down
