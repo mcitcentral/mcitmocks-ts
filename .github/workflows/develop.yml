@@ -18,10 +18,8 @@ jobs:
       - uses: actions/checkout@v2
       - name: Create .env
         run: cp .env.example .env
-      - name: Docker Compose
+      - name: Docker Compose & Test
         run: yarn docker:ci
         env:
           JWT_TOKEN_KEY: ${{ secrets.JWT_TOKEN_KEY }}
           GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
-      - name: Test
-        run: yarn test

@@ -10,7 +10,6 @@ jobs:
           version: 19.03.13
       - run: cp .env.example .env
       - run: yarn docker:ci
-      - run: yarn test
       - run: docker-compose down
 
 workflows:
