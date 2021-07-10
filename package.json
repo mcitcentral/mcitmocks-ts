@@ -4,6 +4,7 @@
   "scripts": {
     "dev": "ts-node-dev index",
     "start": "ts-node index",
+    "build": "cd client && yarn build",
     "test": "jest --testTimeout=10000",
     "db:migrate": "prisma migrate deploy",
     "db:generate": "prisma generate",
