@@ -14,13 +14,12 @@ jobs:
       matrix:
         node-version: [14.15.4]
 
-    env:
-      JWT_TOKEN_KEY: ${{ secrets.JWT_TOKEN_KEY }}
-      GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
-
     steps:
       - uses: actions/checkout@v2
       - name: Docker Compose
         run: yarn docker:ci
+        env:
+          JWT_TOKEN_KEY: ${{ secrets.JWT_TOKEN_KEY }}
+          GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
       - name: Test
         run: yarn test
