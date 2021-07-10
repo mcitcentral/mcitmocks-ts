@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "ts-node-dev index",
     "start": "ts-node index",
-    "test": "jest --testTimeout=10000",
+    "test": "jest --testTimeout=10000 --forceExit",
     "db:migrate": "prisma migrate deploy",
     "db:generate": "prisma generate",
     "db:reset": "prisma migrate reset",
