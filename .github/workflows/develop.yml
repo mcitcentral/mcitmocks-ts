@@ -16,6 +16,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      - name: Create .env
+        run: cp .env.example .env
       - name: Docker Compose
         run: yarn docker:ci
         env:
