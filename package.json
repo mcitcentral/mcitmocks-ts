@@ -10,7 +10,7 @@
     "db:generate": "prisma generate",
     "db:reset": "prisma migrate reset",
     "db:seed": "prisma db seed --preview-feature",
-    "heroku-prebuild": "yarn db:migrate && yarn db:generate"
+    "postinstall": "yarn db:migrate && yarn db:generate"
   },
   "dependencies": {
     "@prisma/client": "2.23.0",
