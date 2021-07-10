@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./TimeBlock.scss";
 import { FaRegCalendar, FaRegEnvelope, FaInbox } from "react-icons/fa";
 import { useEffect } from "react";
-import { parseISO,format } from 'date-fns';
+import { format } from 'date-fns';
 import { Interview } from "../Day/Day";
 import { RootState } from "../../../store";
 import { useSelector } from "react-redux";

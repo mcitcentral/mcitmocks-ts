@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import TimeBlock from "../TimeBlock/TimeBlock";
-import { parseISO,format } from 'date-fns';
+import { format } from 'date-fns';
 import './Day.css';
 
 export interface User {
