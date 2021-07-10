@@ -1,0 +1,31 @@
+version: "3"
+
+services:
+  database:
+    image: postgres
+    container_name: database
+    restart: always
+    ports:
+      - 5432
+    environment:
+      POSTGRES_DB: mcitmocks_dev
+      POSTGRES_USER: mcitmocks
+      POSTGRES_PASSWORD: password
+
+  server:
+    build: .
+    container_name: server
+    ports:
+      - 8000:8000
+    depends_on:
+      - database
+    environment:
+      DATABASE_URL: postgresql://mcitmocks:password@database:5432/mcitmocks_dev
+
+  client:
+    build: client
+    container_name: client
+    ports:
+      - 3000:3000
+    depends_on:
+      - server

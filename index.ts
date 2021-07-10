@@ -28,6 +28,7 @@ app.use(
   }).unless({ path: ["/api/auth/token"] })
 );
 
+app.use("/", express.static("dist"));
 app.use("/api/auth", authController(prismaClient));
 app.use("/api/interviews", interviewController(prismaClient));
 app.use("/api/availability", availabilityController(prismaClient));
