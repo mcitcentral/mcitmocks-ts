@@ -22,4 +22,4 @@ jobs:
       - name: Docker Compose
         run: yarn docker:ci
       - name: Test
-        uses: yarn test
+        run: yarn test
