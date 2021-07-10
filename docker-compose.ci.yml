@@ -17,6 +17,9 @@ services:
       context: .
       dockerfile: Dockerfile.ci
     container_name: server
+    environment:
+      - JWT_TOKEN_KEY
+      - GOOGLE_CLIENT_ID
     ports:
       - 8000:8000
     depends_on:

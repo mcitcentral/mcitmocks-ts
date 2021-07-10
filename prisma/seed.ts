@@ -5,9 +5,8 @@ import seedAvailabilities from "./seeds/seedAvailabilities";
 import seedInterviews from "./seeds/seedInterviews";
 
 export default async function main() {
+  const prisma = new PrismaClient();
   try {
-    const prisma = new PrismaClient();
-
     // Delete in reverse order
     const deleteUsers = prisma.user.deleteMany({});
     const deleteInterviewQuestions = prisma.interviewQuestion.deleteMany({});
@@ -25,9 +24,9 @@ export default async function main() {
     console.log("Seed Availabilities");
     await seedInterviews(prisma);
     console.log("Seed Interviews");
-
-    await prisma.$disconnect();
   } catch (e) {
     console.log(e);
+  } finally {
+    await prisma.$disconnect();
   }
 }
