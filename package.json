@@ -1,10 +1,14 @@
 {
   "name": "mcitmocks",
   "version": "1.0.0",
+  "license": "UNLICENSED",
   "scripts": {
     "dev": "ts-node-dev index",
     "start": "ts-node index",
-    "test": "jest --testTimeout=10000",
+    "test": "jest --testTimeout=10000 --forceExit",
+    "test:ci": "yarn docker:ci && yarn test",
+    "docker:ci": "docker-compose --f docker-compose.ci.yml up",
+    "docker:dev": "docker-compose --f docker-compose.dev.yml up",
     "db:migrate": "prisma migrate deploy",
     "db:generate": "prisma generate",
     "db:reset": "prisma migrate reset",
@@ -29,14 +33,13 @@
     "@types/jest": "26.0.15",
     "@types/jsonwebtoken": "8.5.1",
     "@types/node": "12.0.0",
-    "@types/socket.io": "3.0.2",
     "@types/supertest": "2.0.11",
     "gray-matter": "4.0.3",
     "jest": "27.0.4",
     "prisma": "2.23.0",
     "supertest": "6.1.3",
-    "ts-node-dev": "1.1.6",
     "ts-jest": "27.0.3",
+    "ts-node-dev": "1.1.6",
     "typescript": "4.3.2"
   },
   "jest": {

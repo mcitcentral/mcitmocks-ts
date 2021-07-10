@@ -1,0 +1,22 @@
+FROM node:14-alpine
+
+ENV APP_HOME="/home/app/mcitmocks"
+
+RUN mkdir -p ${APP_HOME} && chown -R node:node ${APP_HOME}
+
+WORKDIR ${APP_HOME}
+
+COPY package*.json ./
+RUN yarn
+
+COPY . . 
+
+EXPOSE 8000
+
+ADD https://github.com/ufoscout/docker-compose-wait/releases/download/2.9.0/wait /wait
+RUN chmod +x /wait
+
+ADD start.ci.sh /start.ci.sh
+RUN chmod +x /start.ci.sh
+
+CMD /wait && /start.ci.sh

@@ -1,0 +1,25 @@
+name: develop
+
+on:
+  push:
+    branches: [develop]
+  pull_request:
+    branches: [develop]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [14.15.4]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Create .env
+        run: cp .env.example .env
+      - name: Docker Compose & Test
+        run: yarn docker:ci
+        env:
+          JWT_TOKEN_KEY: ${{ secrets.JWT_TOKEN_KEY }}
+          GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}

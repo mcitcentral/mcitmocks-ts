@@ -6,19 +6,27 @@ import seedInterviews from "./seeds/seedInterviews";
 
 export default async function main() {
   const prisma = new PrismaClient();
+  try {
+    // Delete in reverse order
+    const deleteUsers = prisma.user.deleteMany({});
+    const deleteInterviewQuestions = prisma.interviewQuestion.deleteMany({});
+    const deleteAvailabilities = prisma.availability.deleteMany({});
+    const deleteInterviews = prisma.interview.deleteMany({});
+    await prisma.$transaction([deleteInterviews, deleteAvailabilities, deleteInterviewQuestions, deleteUsers]);
+    console.log("Deleting everything");
 
-  // Delete in reverse order
-  const deleteUsers = prisma.user.deleteMany({});
-  const deleteInterviewQuestions = prisma.interviewQuestion.deleteMany({});
-  const deleteAvailabilities = prisma.availability.deleteMany({});
-  const deleteInterviews = prisma.interview.deleteMany({});
-  await prisma.$transaction([deleteInterviews, deleteAvailabilities, deleteInterviewQuestions, deleteUsers]);
-
-  // Seed in order based on dependencies
-  await seedUsers(prisma);
-  await seedInterviewQuestions(prisma);
-  await seedAvailabilities(prisma);
-  await seedInterviews(prisma);
-
-  await prisma.$disconnect();
+    // Seed in order based on dependencies
+    await seedUsers(prisma);
+    console.log("Seed Users");
+    await seedInterviewQuestions(prisma);
+    console.log("Seed Interview Questions");
+    await seedAvailabilities(prisma);
+    console.log("Seed Availabilities");
+    await seedInterviews(prisma);
+    console.log("Seed Interviews");
+  } catch (e) {
+    console.log(e);
+  } finally {
+    await prisma.$disconnect();
+  }
 }

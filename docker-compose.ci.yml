@@ -15,19 +15,15 @@ services:
   server:
     build:
       context: .
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile.ci
     container_name: server
+    environment:
+      - JWT_TOKEN_KEY
+      - GOOGLE_CLIENT_ID
     ports:
       - 8000:8000
     depends_on:
       - database
     environment:
       DATABASE_URL: postgresql://mcitmocks:password@database:5432/mcitmocks_dev
-
-  client:
-    build: client
-    container_name: client
-    ports:
-      - 3000:3000
-    depends_on:
-      - server
+      WAIT_HOSTS: database:5432
