@@ -31,8 +31,23 @@ export default async function main(prisma: PrismaClient) {
       isTaken: false,
     },
   });
+  const availability3 = await prisma.availability.upsert({
+    where: { id: "13" },
+    create: {
+      id: "13",
+      user: { connect: { id: "3" } },
+      startTime: new Date(2021, 6, 20, 10, 30, 30, 80),
+      isTaken: false
+    },
+    update: {
+      user: { connect: { id: "3" } },
+      startTime: new Date(2021, 6, 20, 10, 30, 30, 80),
+      isTaken: false,
+    },
+  });
   console.log(availability1);
-  console.log(availability2)
+  console.log(availability2);
+  console.log(availability3);
 }
 
 
