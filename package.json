@@ -4,7 +4,7 @@
   "scripts": {
     "dev": "ts-node-dev index",
     "start": "ts-node index",
-    "build": "cd client && yarn build",
+    "build": "cd client && yarn && yarn build",
     "test": "jest --testTimeout=10000",
     "db:migrate": "prisma migrate deploy",
     "db:generate": "prisma generate",
@@ -43,5 +43,8 @@
   },
   "jest": {
     "preset": "ts-jest"
+  },
+  "engines": {
+    "node": "14.15.4"
   }
 }
