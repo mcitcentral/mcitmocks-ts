@@ -1,0 +1,112 @@
+@import "../../styles/Variables.scss";
+
+.interviewCard {
+  position: relative;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: $default-shadow;
+  display: grid;
+  grid-template-columns: 100px 1fr 150px;
+  grid-column-gap: 25px;
+
+  &__left {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  &__right {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+
+  &__image {
+    border-radius: 100px;
+    background-color: $coolGray-100;
+    height: 100px;
+    img {
+      height: 100px;
+      object-fit: cover;
+      border-radius: 100px;
+    }
+  }
+  &__name {
+    font-family: "Inter", sans-serif;
+    font-size: 24px;
+    font-weight: 400;
+    margin-top: 5px;
+  }
+  &__time {
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
+    margin-top: 5px;
+  }
+  &__tags {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+  }
+  &__status {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 12px;
+    text-transform: uppercase;
+    color: white;
+    height: 36px;
+    width: 120px;
+    background-color: $green-400;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    &[data-status="INVITED"] {
+      opacity: 0.3;
+    }
+  }
+  &__cancel {
+    opacity: 0.3;
+    transition: opacity 300ms;
+    &:hover {
+      opacity: 1;
+    }
+    &:disabled {
+      opacity: 0.1;
+    }
+  }
+}
+
+.interviewCardPopup {
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(2px);
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  p {
+    font-family: "Inter", sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+  }
+  &__buttons {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    button {
+      font-family: "Inter", sans-serif;
+      padding: 10px 15px;
+      border-radius: 10px;
+      color: white;
+      font-weight: 500;
+    }
+  }
+  &__yes {
+    background-color: $red-500;
+  }
+  &__no {
+    background-color: $coolGray-500;
+  }
+}
