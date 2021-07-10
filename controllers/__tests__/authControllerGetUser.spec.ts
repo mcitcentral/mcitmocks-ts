@@ -19,6 +19,17 @@ describe("GET /api/auth/user", () => {
     const token = authService.generateJWT(user!);
     const res = await request(app).get("/api/auth/user").set("cookie", `mcitmocks=${token}`);
     expect(res.statusCode).toEqual(200);
-    expect(res.body).toEqual({ user: { email: "alice@gmail.com", id: "1", timeZone: "America/Chicago" } });
+    expect(res.body).toEqual({
+      user: {
+        id: "1",
+        name: "Alice",
+        email: "alice@gmail.com",
+        timeZone: "America/Chicago",
+        codingLanguage: [],
+        imageUrl: null,
+        questionDifficulty: "EASY",
+        questionTypes: [],
+      },
+    });
   });
 });
