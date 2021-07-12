@@ -54,7 +54,7 @@ const dashboardSlice = createSlice({
   },
   extraReducers: {
     [fetchConfirmedInterviews.fulfilled.type]: (state, action) => {
-      state.confirmedInterviews = action.payload.interviews;
+      state.confirmedInterviews = action.payload.interviews.interviewsAsInviter.concat(action.payload.interviews.interviewsAsInvitee);
       state.upcomingMock = getUpcomingMock(state.confirmedInterviews);
     },
     [fetchConfirmedInterviews.rejected.type]: (state) => {
