@@ -7,3 +7,4 @@ describe("Basic Test", () => {
     cy.visit("/dashboard");
   });
 });
+export default describe;

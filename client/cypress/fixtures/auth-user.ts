@@ -1,8 +1,8 @@
 export default function handler() {
   return {
     user: {
-      id: "mock-user-id",
-      email: "test@email.com",
+      id: "1",
+      email: "alice@gmail.com",
       timeZone: "America/Chicago",
     },
   };
