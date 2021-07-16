@@ -1,0 +1,49 @@
+.container {
+    font-family: "IBM Plex Mono", monospace;
+    width: 1200px;
+    height: 500px;
+}
+.calendar {
+    
+    display: flex;
+    flex-direction: row-reverse;
+    float: left;
+ 
+    width: 1200px;
+    height: 500px;
+    overflow-y: scroll;
+    overflow-x: auto;
+    margin-left: -70px;
+}
+
+
+.button {
+    border: none #E5E7EB;
+    box-sizing: border-box;
+    margin: 0 2px;
+    border-radius: 200px;
+    width: 30px;
+    height: 30px;
+    padding: 5px;
+}
+
+.button-group {
+    float: right;
+    width: 80px;
+    height: 40px;
+    margin-top: -40px;
+    margin-right: 60px;
+}
+
+.normalButton {
+    float: right;
+    padding: 10px 30px 10px 30px;
+    width: 150px;
+    height: 40px;
+    border: none;
+    background: #3F83F8;
+    border-radius: 10px;
+    color: white;
+    margin-top: 20px;
+    margin-right: 80px;
+}

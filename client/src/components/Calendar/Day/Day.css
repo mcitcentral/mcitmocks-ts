@@ -1,0 +1,23 @@
+.calendar-day {
+    flex: 0 0 150px;
+    padding: 0 5px;
+}
+
+.calendar-day-label h4 {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 16px;
+    line-height: 14px;
+    margin: 0 0 5px;
+}
+
+.calendar-day-label {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 14px;
+    line-height: 14px;
+    margin: 0 0 8px;
+}
+
+.calendar-day-label span {
+    color: #272343;
+}
+
