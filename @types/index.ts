@@ -1,4 +1,4 @@
-import { Interview, InterviewStatus, User } from "@prisma/client";
+import { Availability, Interview, InterviewStatus, User } from "@prisma/client";
 
 export interface JWTToken {
   id: string;
@@ -15,14 +15,16 @@ export interface JwtRequest {
   jwt: string;
 }
 
+export type InterviewWithUserInfo = Interview & { invitee: User; inviter: User };
+
 export interface Interviews {
-  interviewsAsInviter: Interview[];
-  interviewsAsInvitee: Interview[];
+  interviewsAsInviter: InterviewWithUserInfo[];
+  interviewsAsInvitee: InterviewWithUserInfo[];
 }
 
 export interface GetInterviewResponse {
-  interviewsAsInviter: Interview[];
-  interviewsAsInvitee: Interview[];
+  interviewsAsInviter: InterviewWithUserInfo[];
+  interviewsAsInvitee: InterviewWithUserInfo[];
 }
 
 export interface CreateInterviewRequest {
@@ -33,6 +35,10 @@ export interface CreateInterviewRequest {
 
 export interface UpdateInterviewRequest {
   status: InterviewStatus;
+}
+
+export interface GetAvailabilitiesResponse {
+  availabilities: Availability[];
 }
 
 export type UserPreferences = Omit<User, "id" | "name" | "email" | "imageUrl">;

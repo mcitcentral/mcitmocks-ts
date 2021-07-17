@@ -1,5 +1,4 @@
 import React from "react";
-import Week from "../components/Calendar/Week/Week";
 import Layout from "../containers/Layout";
 
 const IndexPage: React.FC<{}> = () => {

@@ -18,6 +18,6 @@ export default class AvailabilityRepository {
         isTaken: false,
       },
     });
-    return availability;
+    return availability || [];
   }
 }
