@@ -1,12 +1,11 @@
 import { Availability, User } from "@prisma/client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { format, lastDayOfISOWeek, startOfISOWeek, sub, add } from "date-fns";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 
 import { InterviewWithUserInfo } from "../../../../@types";
 import Day from "./Day";
 import "./Calendar.scss";
-import { useEffect } from "react";
 
 interface CalendarProps {
   interviews: InterviewWithUserInfo[];
@@ -37,7 +36,6 @@ const Calendar: React.FC<CalendarProps> = ({
   const [availabilityMap, setAvailabilityMap] = useState<{ [key: string]: boolean }>(_availabilityMap);
   useEffect(() => {
     const _availabilityMap = mapAvailabilities(availabilities);
-    console.log(_availabilityMap);
     setAvailabilityMap(_availabilityMap);
   }, [availabilities]);
 

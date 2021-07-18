@@ -21,7 +21,9 @@ const DashboardPage: React.FC<{}> = () => {
 
   if (authState.isLoading || dashboardState.isLoading || !authState.user) return <LoadingPage />;
 
-  const handleCancelInterview = async (interviewId: string) => {};
+  const handleCancelInterview = async (interviewId: string) => {
+    // TODO: Implement this endpoint
+  };
 
   const handleUpdateAvailabilities = async (availabilityMap: { [key: string]: boolean }) => {
     dispatch(updateAvailabilities(availabilityMap));

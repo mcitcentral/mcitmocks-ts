@@ -77,6 +77,5 @@ const dashboardSlice = createSlice({
   },
 });
 
-const { actions, reducer } = dashboardSlice;
-export const {} = actions;
+const { reducer } = dashboardSlice;
 export default reducer;
