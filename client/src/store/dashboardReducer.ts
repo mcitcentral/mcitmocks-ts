@@ -1,6 +1,6 @@
 import { Availability } from "@prisma/client";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { InterviewWithUserInfo } from "../../../@types";
+import { AvailabilityWithUser, InterviewWithUserInfo } from "../../../@types";
 import apiClient from "../lib/apiClient";
 
 export const fetchAll = createAsyncThunk("fetchAll", async () => {
@@ -11,7 +11,16 @@ export const fetchAll = createAsyncThunk("fetchAll", async () => {
   return { availabilityResponse, interviewResponse };
 });
 
-export const updateAvailabilities = createAsyncThunk("updateAvailabilities", async () => {});
+export const updateAvailabilities = createAsyncThunk(
+  "updateAvailabilities",
+  async (availabilityMap: { [key: string]: boolean }) => {
+    return await apiClient.updateAvailabilities(availabilityMap);
+  }
+);
+
+export const searchAvailabilities = createAsyncThunk("searchAvailabilities", async (startTimes: string | string[]) => {
+  return await apiClient.searchAvailabilities(startTimes);
+});
 
 interface DashboardState {
   isLoading: boolean;
@@ -19,6 +28,7 @@ interface DashboardState {
   interviewsAsInvitee: InterviewWithUserInfo[];
   interviewsAsInviter: InterviewWithUserInfo[];
   availabilities: Availability[];
+  searchedAvailabilities: AvailabilityWithUser[];
 }
 
 const initialState: DashboardState = {
@@ -27,6 +37,7 @@ const initialState: DashboardState = {
   interviewsAsInvitee: [],
   interviewsAsInviter: [],
   availabilities: [],
+  searchedAvailabilities: [],
 };
 
 const dashboardSlice = createSlice({
@@ -50,6 +61,18 @@ const dashboardSlice = createSlice({
       state.interviewsAsInviter = [];
       state.interviewsAsInvitee = [];
       state.isLoading = false;
+    },
+    [searchAvailabilities.fulfilled.type]: (state, action) => {
+      state.searchedAvailabilities = action.payload;
+    },
+    [searchAvailabilities.rejected.type]: (state) => {
+      state.searchedAvailabilities = [];
+    },
+    [updateAvailabilities.fulfilled.type]: (state, action) => {
+      state.availabilities = action.payload;
+    },
+    [updateAvailabilities.rejected.type]: (state) => {
+      state.availabilities = [];
     },
   },
 });

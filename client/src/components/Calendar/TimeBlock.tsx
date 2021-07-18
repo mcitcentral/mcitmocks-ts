@@ -13,8 +13,9 @@ export interface timeProps {
   toggleAvailability: (startTime: Date) => void;
 }
 
-const TimeBlock: React.FC<timeProps> = ({ interview, startTime, toggleAvailability, isAvailable, user }) => {
-  const handleClick = () => {
+const TimeBlock: React.FC<timeProps> = ({ interview, startTime, isAvailable, user, toggleAvailability }) => {
+  const handleClick = async () => {
+    // TODO: Figure out disabled conditions
     toggleAvailability(startTime);
   };
 

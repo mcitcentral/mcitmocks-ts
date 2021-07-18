@@ -20,4 +20,16 @@
     font-weight: 500;
     margin-bottom: 15px;
   }
+  &__searchResults {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: 25px;
+    grid-row-gap: 25px;
+    padding-top: 50px;
+    justify-items: center;
+    h2 {
+      grid-column: 1 / span 2;
+      text-align: center;
+    }
+  }
 }

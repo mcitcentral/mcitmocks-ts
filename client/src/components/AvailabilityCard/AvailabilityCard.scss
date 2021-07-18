@@ -1,13 +1,13 @@
 @import "../../styles/Variables.scss";
 
 .availabilityCard {
-  max-width: 500px;
   display: grid;
   grid-template-columns: 90px 1fr 75px;
   grid-column-gap: 15px;
   align-items: center;
   background-color: white;
   box-shadow: $default-shadow;
+  border-radius: 10px;
   padding: 25px;
   &__image {
     img {
@@ -42,5 +42,8 @@
     width: 60px;
     border-radius: 60px;
     background-color: $blue-400;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }

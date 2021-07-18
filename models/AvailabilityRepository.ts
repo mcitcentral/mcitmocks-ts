@@ -21,16 +21,37 @@ export default class AvailabilityRepository {
     return availability || [];
   }
 
-  async searchAvailability(userId: string, startTime: string) {
+  async searchAvailability(userId: string, startTime: string | string[]) {
+    const startTimes = Array.isArray(startTime)
+      ? startTime.map((timeString) => new Date(timeString))
+      : [new Date(startTime)];
     const availability = await this.prisma.availability.findMany({
       where: {
-        NOT: {
-          userId: userId,
-        },
-        startTime: new Date(startTime),
+        NOT: { userId },
+        startTime: { in: startTimes },
         isTaken: false,
       },
+      include: { user: true },
     });
     return availability;
+  }
+
+  async updateAvailabilities(userId: string, availabilityMap: { [key: string]: boolean }) {
+    const updates: any[] = [];
+    for (const [startTime, isAvailable] of Object.entries(availabilityMap)) {
+      if (isAvailable) {
+        updates.push(
+          this.prisma.availability.upsert({
+            where: { userId_startTime: { userId, startTime } },
+            update: { isTaken: false },
+            create: { isTaken: false, startTime, userId },
+          })
+        );
+      } else {
+        updates.push(this.prisma.availability.delete({ where: { userId_startTime: { userId, startTime } } }));
+      }
+    }
+    await this.prisma.$transaction(updates);
+    return await this.prisma.availability.findMany({ where: { userId, isTaken: false } });
   }
 }

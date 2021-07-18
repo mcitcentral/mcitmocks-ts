@@ -15,7 +15,8 @@ export interface JwtRequest {
   jwt: string;
 }
 
-export type InterviewWithUserInfo = Interview & { invitee: User; inviter: User };
+export type InterviewWithUserInfo = Interview & { invitee: UserPublic; inviter: UserPublic };
+export type AvailabilityWithUser = Availability & { user: UserPublic };
 
 export interface Interviews {
   interviewsAsInviter: InterviewWithUserInfo[];
@@ -43,7 +44,13 @@ export interface GetAvailabilitiesResponse {
 
 export type UserPreferences = Omit<User, "id" | "name" | "email" | "imageUrl">;
 
+export type UserPublic = Pick<User, "name" | "imageUrl" | "codingLanguage" | "questionDifficulty" | "questionTypes">;
+
 export type UpdateUserPreferencesRequest = UserPreferences;
+
+export type SearchAvailabilitiesRequest = {
+  startTime: string[] | string;
+};
 
 declare global {
   namespace Express {

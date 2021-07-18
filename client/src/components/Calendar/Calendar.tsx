@@ -7,28 +7,37 @@ import { InterviewWithUserInfo } from "../../../../@types";
 import Day from "./Day";
 import "./Calendar.scss";
 import { useEffect } from "react";
-import { updateAvailabilities } from "../../store/dashboardReducer";
 
 interface CalendarProps {
   interviews: InterviewWithUserInfo[];
   availabilities: Availability[];
   user: User;
+  updateAvailabilities: (availabilityMap: { [key: string]: boolean }) => Promise<void>;
+  searchAvailabilities: (startTime: string | string[]) => Promise<void>;
 }
 
 const mapAvailabilities = (availabilities: Availability[]) => {
   return availabilities.reduce((prev, curr) => {
-    prev[String(curr.startTime)] = curr.isTaken;
+    const isAvailable = !curr.isTaken;
+    prev[curr.startTime.toISOString()] = isAvailable;
     return prev;
   }, {});
 };
 
-const Calendar: React.FC<CalendarProps> = ({ interviews, availabilities, user }) => {
+const Calendar: React.FC<CalendarProps> = ({
+  interviews,
+  availabilities,
+  user,
+  searchAvailabilities,
+  updateAvailabilities,
+}) => {
   const [startDate, setStartDate] = useState<Date>(startOfISOWeek(new Date()));
 
   const _availabilityMap = mapAvailabilities(availabilities);
   const [availabilityMap, setAvailabilityMap] = useState<{ [key: string]: boolean }>(_availabilityMap);
   useEffect(() => {
     const _availabilityMap = mapAvailabilities(availabilities);
+    console.log(_availabilityMap);
     setAvailabilityMap(_availabilityMap);
   }, [availabilities]);
 
@@ -46,7 +55,18 @@ const Calendar: React.FC<CalendarProps> = ({ interviews, availabilities, user })
     setAvailabilityMap((prev) => ({ ...prev, [startTime.toISOString()]: !previous }));
   };
 
-  const handleUpdateAvailability = async () => {};
+  useEffect(() => {
+    const startTimes: string[] = [];
+    for (const [startTime, isAvailable] of Object.entries(availabilityMap)) {
+      if (isAvailable) startTimes.push(startTime);
+    }
+    searchAvailabilities(startTimes);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [availabilityMap]);
+
+  const handleUpdateAvailabilities = () => {
+    updateAvailabilities(availabilityMap);
+  };
 
   return (
     <div className="calendar">
@@ -90,7 +110,7 @@ const Calendar: React.FC<CalendarProps> = ({ interviews, availabilities, user })
         </div>
       </div>
       <div className="calendar__bottom">
-        <button className="calendar-save-button" onClick={updateAvailabilities}>
+        <button className="calendar-save-button" onClick={handleUpdateAvailabilities}>
           Save
         </button>
       </div>

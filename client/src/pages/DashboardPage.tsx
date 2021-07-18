@@ -3,11 +3,12 @@ import { shallowEqual } from "react-redux";
 
 import Layout from "../containers/Layout";
 import { useAppDispatch, useAppSelector } from "../hooks";
-import { fetchAll } from "../store/dashboardReducer";
+import { fetchAll, searchAvailabilities, updateAvailabilities } from "../store/dashboardReducer";
 import Calendar from "../components/Calendar/Calendar";
 import LoadingPage from "./LoadingPage";
 import "../styles/DashboardPage.scss";
 import InterviewCard from "../components/InterviewCard/InterviewCard";
+import AvailabilityCard from "../components/AvailabilityCard/AvailabilityCard";
 
 const DashboardPage: React.FC<{}> = () => {
   const dispatch = useAppDispatch();
@@ -21,7 +22,14 @@ const DashboardPage: React.FC<{}> = () => {
   if (authState.isLoading || dashboardState.isLoading || !authState.user) return <LoadingPage />;
 
   const handleCancelInterview = async (interviewId: string) => {};
-  const updateAvailabilities = async () => {};
+
+  const handleUpdateAvailabilities = async (availabilityMap: { [key: string]: boolean }) => {
+    dispatch(updateAvailabilities(availabilityMap));
+  };
+
+  const handleSearchAvailabilities = async (startTimes: string | string[]) => {
+    dispatch(searchAvailabilities(startTimes));
+  };
 
   return (
     <Layout>
@@ -42,7 +50,15 @@ const DashboardPage: React.FC<{}> = () => {
             availabilities={dashboardState.availabilities}
             interviews={dashboardState.interviews}
             user={authState.user}
+            updateAvailabilities={handleUpdateAvailabilities}
+            searchAvailabilities={handleSearchAvailabilities}
           />
+        </div>
+        <div className="dashboard__searchResults">
+          <h2 className="dashboard__title">MATCHES FOR YOUR AVAILABILITY</h2>
+          {dashboardState.searchedAvailabilities.map((availability) => (
+            <AvailabilityCard key={availability.id} availability={availability} />
+          ))}
         </div>
       </div>
     </Layout>
