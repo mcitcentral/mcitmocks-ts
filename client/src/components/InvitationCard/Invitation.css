@@ -1,43 +1,41 @@
 .name {
-
-    font-family: Inter;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 16px;
-    line-height: 19px;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 19px;
 }
 
 .time {
-    font-family: Inter;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 14px;
-    line-height: 17px;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 17px;
 }
 
 .checkIcon {
-    width: 20px;
-    height: 25px;
-    color: #31C48D;
+  width: 20px;
+  height: 25px;
+  color: #31c48d;
 }
 .button {
-    margin-right: 10px;
-    background-color: #fff;
-    border: 2px solid #F4F5F7;
-    border-radius: 60%;
+  margin-right: 10px;
+  background-color: #fff;
+  border: 2px solid #f4f5f7;
+  border-radius: 60%;
 }
 .timesIcon {
-    width: 20px;
-    height: 25px;
-    color: #E02424;
+  width: 20px;
+  height: 25px;
+  color: #e02424;
 }
 .box {
-    width: 300px;
-    margin-top: 10px;
+  width: 300px;
+  margin-top: 10px;
 }
 .iconGroup {
-    float: left;
-    margin-left: 150px;
-    margin-top:-30px;
-    
+  float: left;
+  margin-left: 150px;
+  margin-top: -30px;
 }
