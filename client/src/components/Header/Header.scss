@@ -5,6 +5,7 @@
   align-items: center;
   justify-content: space-between;
   box-sizing: border-box;
+  position: relative;
   height: 75px;
   width: 100%;
   padding: 0 25px;
@@ -21,6 +22,16 @@
     display: flex;
     justify-content: flex-end;
   }
+  &__button {
+    height: 100%;
+    width: 75px;
+    background-color: transparent;
+  }
+  .invitationList {
+    position: absolute;
+    top: 75px;
+    right: 75px;
+  }
 }
 
 .loginButton {
@@ -35,5 +46,26 @@
   align-items: center;
   svg {
     margin-right: 10px;
+  }
+}
+
+.menuDropdown {
+  position: absolute;
+  top: 75px;
+  padding: 15px;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  box-sizing: border-box;
+  box-shadow: 0px 0px 25px rgba(229, 231, 235, 0.5);
+  border-radius: 0px 0px 10px 10px;
+  display: flex;
+  flex-direction: column;
+  &__button {
+    font-family: $inter;
+    font-size: 16px;
+    padding: 10px 25px;
+    &:hover {
+      color: $blue-500;
+    }
   }
 }

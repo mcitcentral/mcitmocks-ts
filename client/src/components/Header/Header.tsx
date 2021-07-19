@@ -1,8 +1,13 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import GoogleLogin from "react-google-login";
-import { FcGoogle } from "react-icons/fc";
+import { FcMenu, FcGoogle } from "react-icons/fc";
+import { FaInbox } from "react-icons/fa";
 
 import "./Header.scss";
+import InvitationList from "../InvitationList/InvitationList";
+import { InterviewWithUserInfo } from "../../../../@types";
+import useOnClickOutside from "../../hooks/useOnClickOutside";
+import MenuDropdown from "./MenuDropdown";
 
 interface LoginButtonProps {
   onClick: () => void;
@@ -19,12 +24,24 @@ const LoginButton: React.FC<LoginButtonProps> = ({ onClick, disabled }) => {
 };
 
 export interface HeaderProps {
+  invitations: InterviewWithUserInfo[];
   isAuthenticated: boolean;
   onLogin: (accessToken: string) => void;
+  handleLogout: () => void;
 }
 
-const Header: React.FC<HeaderProps> = ({ isAuthenticated, onLogin }) => {
+const Header: React.FC<HeaderProps> = ({ isAuthenticated, onLogin, invitations, handleLogout }) => {
   const onSuccess = async (res: any) => onLogin(res.tokenId);
+
+  const inboxRef = useRef<HTMLDivElement>(null);
+  const [isInboxActive, setIsInboxActive] = useState<boolean>(false);
+  const toggleInbox = () => setIsInboxActive((prev) => !prev);
+  useOnClickOutside(inboxRef, () => setIsInboxActive(false));
+
+  const menuRef = useRef<HTMLDivElement>(null);
+  const [isMenuActive, setIsMenuActive] = useState<boolean>(false);
+  const toggleMenu = () => setIsMenuActive((prev) => !prev);
+  useOnClickOutside(menuRef, () => setIsMenuActive(false));
 
   return (
     <header className="header">
@@ -33,7 +50,16 @@ const Header: React.FC<HeaderProps> = ({ isAuthenticated, onLogin }) => {
       </div>
       <div className="header__right">
         {isAuthenticated ? (
-          <div>Test</div>
+          <>
+            {isInboxActive && <InvitationList ref={inboxRef} invitations={invitations} />}
+            {isMenuActive && <MenuDropdown ref={menuRef} handleLogout={handleLogout} />}
+            <button className="header__button" disabled={invitations.length === 0} onClick={toggleInbox}>
+              <FaInbox color="white" size={25} />
+            </button>
+            <button className="header__button" onClick={toggleMenu}>
+              <FcMenu color="white" size={25} />
+            </button>
+          </>
         ) : (
           <GoogleLogin
             clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID!}
