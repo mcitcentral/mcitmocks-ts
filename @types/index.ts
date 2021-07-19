@@ -1,4 +1,4 @@
-import { Interview, InterviewStatus, User } from "@prisma/client";
+import { Availability, Interview, InterviewStatus, User } from "@prisma/client";
 
 export interface JWTToken {
   id: string;
@@ -15,14 +15,17 @@ export interface JwtRequest {
   jwt: string;
 }
 
+export type InterviewWithUserInfo = Interview & { invitee: UserPublic; inviter: UserPublic };
+export type AvailabilityWithUser = Availability & { user: UserPublic };
+
 export interface Interviews {
-  interviewsAsInviter: Interview[];
-  interviewsAsInvitee: Interview[];
+  interviewsAsInviter: InterviewWithUserInfo[];
+  interviewsAsInvitee: InterviewWithUserInfo[];
 }
 
 export interface GetInterviewResponse {
-  interviewsAsInviter: Interview[];
-  interviewsAsInvitee: Interview[];
+  interviewsAsInviter: InterviewWithUserInfo[];
+  interviewsAsInvitee: InterviewWithUserInfo[];
 }
 
 export interface CreateInterviewRequest {
@@ -35,9 +38,19 @@ export interface UpdateInterviewRequest {
   status: InterviewStatus;
 }
 
+export interface GetAvailabilitiesResponse {
+  availabilities: Availability[];
+}
+
 export type UserPreferences = Omit<User, "id" | "name" | "email" | "imageUrl">;
 
+export type UserPublic = Pick<User, "name" | "imageUrl" | "codingLanguage" | "questionDifficulty" | "questionTypes">;
+
 export type UpdateUserPreferencesRequest = UserPreferences;
+
+export type SearchAvailabilitiesRequest = {
+  startTime: string[] | string;
+};
 
 declare global {
   namespace Express {

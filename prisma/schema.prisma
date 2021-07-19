@@ -28,12 +28,13 @@ model User {
 }
 
 model Availability {
-  id        String   @id
+  id        String   @id @default(uuid())
   userId    String   @map("user_id")
   user      User     @relation(fields: [userId], references: [id])
   startTime DateTime @map("start_time")
   isTaken   Boolean  @default(false) @map("is_taken")
 
+  @@unique([userId, startTime])
   @@map(name: "availability")
 }
 

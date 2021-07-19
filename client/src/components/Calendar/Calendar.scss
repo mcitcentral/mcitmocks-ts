@@ -1,0 +1,126 @@
+@import "../../styles/Variables.scss";
+
+.calendar {
+  display: flex;
+  flex-direction: column;
+  padding: 45px;
+  background-color: white;
+  box-shadow: $default-shadow;
+  border-radius: 10px;
+  &__top {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #e5e7eb;
+    h2 {
+      font-family: "Inter", sans-serif;
+      font-weight: 500;
+      font-size: 24px;
+    }
+  }
+  &__main {
+    padding-top: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  &__mainHeader,
+  &__mainBody {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-column-gap: 10px;
+  }
+  &__mainHeader {
+    font-family: "Inter", sans-serif;
+  }
+  &__mainBody {
+    height: 470px;
+    overflow-y: scroll;
+  }
+  &__bottom {
+    display: flex;
+    justify-content: flex-end;
+  }
+}
+
+.calendar-day {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.calendar-day-label {
+  font-family: "Inter", sans-serif;
+  font-size: 16px;
+  line-height: 0.9em;
+  margin: 0 0 8px;
+  h4 {
+    font-weight: 600;
+    margin: 0 0 5px;
+  }
+  span {
+    color: $gray-800;
+  }
+}
+
+.timeblock {
+  width: 150px;
+  height: 50px;
+  border-left: 5px solid;
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  &__top {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  &__bottom {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+  }
+  &__time {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 14px;
+  }
+
+  &__message {
+    font-family: "Inter", sans-serif;
+  }
+  &[data-type="AVAILABLE"] {
+    background: #ebf5ff;
+    color: #3f83f8;
+    border-color: #76a9fa;
+  }
+  &[data-type="UNAVAILABLE"] {
+    background: #f4f5f7;
+    color: #9fa6b2;
+    border-color: #e5e7eb;
+  }
+  &[data-type="CONFIRMED"] {
+    background: #def7ec;
+    color: #31c48d;
+    border-color: #31c48d;
+  }
+  &[data-type="INVITED"] {
+    background: #fdfdea;
+    color: #faca15;
+    border-color: #faca15;
+  }
+}
+
+.calendar-save-button {
+  padding: 10px 30px 10px 30px;
+  width: 150px;
+  height: 40px;
+  border: none;
+  background: #3f83f8;
+  border-radius: 10px;
+  color: white;
+  margin-top: 25px;
+}

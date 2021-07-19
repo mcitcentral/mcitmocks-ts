@@ -1,4 +1,4 @@
-import { Interview, InterviewStatus, PrismaClient } from "@prisma/client";
+import { Interview, InterviewStatus, PrismaClient, User } from "@prisma/client";
 import { Interviews } from "../@types";
 
 export default class InterviewRepository {
@@ -20,10 +20,10 @@ export default class InterviewRepository {
   async getInterviewsByUserId(userId: string): Promise<Interviews> {
     // TODO: Modify to include user details as well
     const [interviewsAsInviter, interviewsAsInvitee] = await Promise.all([
-      this.prisma.interview.findMany({ where: { inviterId: userId } }),
-      this.prisma.interview.findMany({ where: { inviteeId: userId } }),
+      this.prisma.interview.findMany({ where: { inviterId: userId }, include: { invitee: true, inviter: true } }),
+      this.prisma.interview.findMany({ where: { inviteeId: userId }, include: { invitee: true, inviter: true } }),
     ]);
-    return { interviewsAsInviter, interviewsAsInvitee };
+    return { interviewsAsInviter: interviewsAsInviter || [], interviewsAsInvitee: interviewsAsInvitee || [] };
   }
 
   async getInterviewsByUserIdAndStatus(userId: string, status: InterviewStatus) {
