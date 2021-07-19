@@ -7,5 +7,6 @@
     "strict": true,
     "typeRoots": ["@types", "node_modules/@types", "node_modules/@types/node"]
   },
-  "lib": ["es2015"]
+  "lib": ["es2015"],
+  "exclude": ["node_modules", "**/*.spec.ts", "client", "docker", "data", "prisma"]
 }
