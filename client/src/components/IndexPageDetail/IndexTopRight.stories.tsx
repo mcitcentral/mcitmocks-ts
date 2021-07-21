@@ -1,4 +1,3 @@
-
 import { Story } from "@storybook/react";
 import { ComponentProps } from "react";
 import IndexTopRight from "./IndexTopRight";
@@ -14,5 +13,4 @@ export default {
 const Template: Story<ComponentProps<typeof IndexTopRight>> = (args) => <IndexTopRight {...args} />;
 
 export const Current = Template.bind({});
-Current.args = {
-};
+Current.args = {};

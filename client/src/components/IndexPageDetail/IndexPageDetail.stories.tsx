@@ -13,11 +13,8 @@ export default {
 
 const Template: Story<ComponentProps<typeof IndexPageDetail>> = (args) => <IndexPageDetail {...args} />;
 
-
 export const NotAuthenticated = Template.bind({});
 NotAuthenticated.args = { isAuthenticated: false };
 
 export const Authenticated = Template.bind({});
 Authenticated.args = { isAuthenticated: true };
-
-

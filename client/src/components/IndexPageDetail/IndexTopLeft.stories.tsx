@@ -1,8 +1,6 @@
+import React, { ComponentProps } from "react";
 import { Story } from "@storybook/react";
-import { CodingLanguage, QuestionDifficulty, QuestionType } from "@prisma/client";
-import { ComponentProps } from "@reach/router/node_modules/@types/react";
 import IndexTopLeft from "./IndexTopLeft";
-import React from "react";
 
 export default {
   title: "IndexTopLeft",
