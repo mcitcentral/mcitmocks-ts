@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "ts-node-dev index",
-    "start": "ts-node index",
-    "build": "cd client && yarn && npm rebuild node-sass && yarn build",
+    "start": "node index",
+    "build": "yarn tsc && cd client && yarn && npm rebuild node-sass && yarn build",
+    "tsc": "tsc",
     "test": "jest --testTimeout=10000",
     "db:migrate": "prisma migrate deploy",
     "db:generate": "prisma generate",

@@ -71,11 +71,11 @@ const Calendar: React.FC<CalendarProps> = ({
       <div className="calendar__top">
         <h2>{header}</h2>
         <div className="calendar__navigation">
-          <button className="button" onClick={onClickLeft}>
-            <FaAngleLeft style={{ color: "#D2D6DC", width: "20px", height: "20px" }} />
+          <button className="calendar__navigationButton" onClick={onClickLeft}>
+            <FaAngleLeft color="#D2D6DC" size={20} />
           </button>
-          <button className="button" onClick={onClickRight}>
-            <FaAngleRight style={{ color: "#D2D6DC", width: "20px", height: "20px" }} />
+          <button className="calendar__navigationButton" onClick={onClickRight}>
+            <FaAngleRight color="#D2D6DC" size={20} />
           </button>
         </div>
       </div>

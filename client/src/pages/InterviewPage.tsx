@@ -57,20 +57,23 @@ const InterviewPage: React.FC<{}> = () => {
     <div className="interviewPage">
       <QuestionSidebar question={interviewState.interview.questions[0]} isInterviewer={isInterviewer} />
       <div className="interviewPage__right">
-        <AceEditor
-          mode="javascript"
-          theme="monokai"
-          width="100%"
-          height="100%"
-          name="ace-editor"
-          value={interviewState.code}
-          onChange={handleOnChange}
-          setOptions={{
-            enableBasicAutocompletion: true,
-            enableLiveAutocompletion: true,
-            enableSnippets: true,
-          }}
-        />
+        {
+          // @ts-ignore
+          <AceEditor
+            mode="javascript"
+            theme="monokai"
+            width="100%"
+            height="100%"
+            name="ace-editor"
+            value={interviewState.code}
+            onChange={handleOnChange}
+            setOptions={{
+              enableBasicAutocompletion: true,
+              enableLiveAutocompletion: true,
+              enableSnippets: true,
+            }}
+          />
+        }
       </div>
     </div>
   );
