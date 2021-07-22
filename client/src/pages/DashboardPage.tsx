@@ -3,7 +3,7 @@ import { shallowEqual } from "react-redux";
 
 import Layout from "../containers/Layout";
 import { useAppDispatch, useAppSelector } from "../hooks";
-import { fetchAll, searchAvailabilities, updateAvailabilities } from "../store/dashboardReducer";
+import { fetchAll, searchAvailabilities, sendInvitation, updateAvailabilities } from "../store/dashboardReducer";
 import Calendar from "../components/Calendar/Calendar";
 import LoadingPage from "./LoadingPage";
 import "../styles/DashboardPage.scss";
@@ -33,6 +33,10 @@ const DashboardPage: React.FC<{}> = () => {
     dispatch(searchAvailabilities(startTimes));
   };
 
+  const handleSendInvitation = async (availabilityId: string) => {
+    dispatch(sendInvitation(availabilityId));
+  };
+
   return (
     <Layout>
       <div className="dashboard">
@@ -59,7 +63,11 @@ const DashboardPage: React.FC<{}> = () => {
         <div className="dashboard__searchResults">
           <h2 className="dashboard__title">MATCHES FOR YOUR AVAILABILITY</h2>
           {dashboardState.searchedAvailabilities.map((availability) => (
-            <AvailabilityCard key={availability.id} availability={availability} />
+            <AvailabilityCard
+              key={availability.id}
+              availability={availability}
+              handleSendInvitation={handleSendInvitation}
+            />
           ))}
         </div>
       </div>

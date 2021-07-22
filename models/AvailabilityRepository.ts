@@ -1,10 +1,24 @@
-import { PrismaClient } from ".prisma/client";
+import { PrismaClient, Availability } from ".prisma/client";
 
 export default class AvailabilityRepository {
   prisma: PrismaClient;
 
   constructor(prismaClient: PrismaClient) {
     this.prisma = prismaClient;
+  }
+
+  async getAvailabilityById(availabilityId: string): Promise<Availability> {
+    const availability = await this.prisma.availability.findUnique({ where: { id: availabilityId } });
+    if (!availability) throw new Error("Availability with this id not found");
+    return availability;
+  }
+
+  async getAvailabilityByUserAndTime(userId: string, startTime: Date): Promise<Availability> {
+    const availability = await this.prisma.availability.findUnique({
+      where: { userId_startTime: { userId, startTime } },
+    });
+    if (!availability) throw new Error("Availability with this id not found");
+    return availability;
   }
 
   async getAvailability(userId: string, startTime: string, endTime: string) {
@@ -33,6 +47,12 @@ export default class AvailabilityRepository {
       },
       include: { user: true },
     });
+    return availability;
+  }
+
+  async updateAvailability(availabilityId: string, data: Partial<Availability>) {
+    const availability = await this.prisma.availability.update({ where: { id: availabilityId }, data });
+    if (!availability) throw new Error("Availability with this id not found");
     return availability;
   }
 

@@ -36,6 +36,10 @@ export const rejectInterview = createAsyncThunk("rejectInterview", async (interv
   return await apiClient.rejectInterview(interviewId);
 });
 
+export const sendInvitation = createAsyncThunk("sendInvitation", async (availabilityId: string) => {
+  return await apiClient.sendInvitation(availabilityId);
+});
+
 interface DashboardState {
   isLoading: boolean;
   interviews: InterviewWithUserInfo[];
@@ -60,7 +64,12 @@ const dashboardSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addMatcher(
-      isAnyOf(fetchInterviews.fulfilled, confirmInterview.fulfilled, rejectInterview.fulfilled),
+      isAnyOf(
+        fetchInterviews.fulfilled,
+        confirmInterview.fulfilled,
+        rejectInterview.fulfilled,
+        sendInvitation.fulfilled
+      ),
       (state, action) => {
         state.interviews = [...action.payload.interviewsAsInvitee, ...action.payload.interviewsAsInviter];
         state.interviewsAsInvitee = action.payload.interviewsAsInvitee;

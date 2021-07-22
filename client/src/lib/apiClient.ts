@@ -36,6 +36,10 @@ const apiClient = {
     const response = await axios.post(`/interviews/${interviewId}`, { status: InterviewStatus.CONFIRMED });
     return convertInterviewResponse(response);
   },
+  sendInvitation: async (availabilityId: string) => {
+    const response = await axios.post(`/interviews`, { availabilityId });
+    return convertInterviewResponse(response);
+  },
 
   // AVAILABILITY
   getAvailabilities: async (): Promise<Availability[]> => {
