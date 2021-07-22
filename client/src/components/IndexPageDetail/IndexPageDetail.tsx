@@ -2,9 +2,13 @@ import IndexBottom from "./IndexBottom";
 import IndexTopLeft from "./IndexTopLeft";
 import IndexTopRight from "./IndexTopRight";
 import "./IndexPageDetail.scss";
-import { HeaderProps } from "../Header/Header";
 
-const IndexPageDetail: React.FC<HeaderProps> = ({ isAuthenticated, onLogin }) => {
+interface IndexPageProps {
+  isAuthenticated: boolean;
+  onLogin: (accessToken: string) => void;
+}
+
+const IndexPageDetail: React.FC<IndexPageProps> = ({ isAuthenticated, onLogin }) => {
   return (
     <div>
       <div className="top">
