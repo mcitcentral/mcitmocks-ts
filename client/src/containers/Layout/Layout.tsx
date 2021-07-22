@@ -32,7 +32,7 @@ const Layout: React.FC<{}> = ({ children }) => {
   const handleRejectInterview = async (interviewId: string) => {
     const res = await dispatch(rejectInterview(interviewId));
     if (res.meta.requestStatus === "fulfilled") {
-      dispatch(setNotification({ message: "Interview cancelled!", status: "information" }));
+      dispatch(setNotification({ message: "Interview cancelled.", status: "information" }));
     } else {
       // @ts-ignore
       dispatch(setNotification({ message: res?.error.message || "An error occured.", status: "error" }));

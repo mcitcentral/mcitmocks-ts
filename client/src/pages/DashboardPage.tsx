@@ -3,7 +3,13 @@ import { shallowEqual } from "react-redux";
 
 import Layout from "../containers/Layout";
 import { useAppDispatch, useAppSelector } from "../hooks";
-import { fetchAll, searchAvailabilities, sendInvitation, updateAvailabilities } from "../store/dashboardReducer";
+import {
+  fetchAll,
+  rejectInterview,
+  searchAvailabilities,
+  sendInvitation,
+  updateAvailabilities,
+} from "../store/dashboardReducer";
 import { setNotification } from "../store/notificationReducer";
 import Calendar from "../components/Calendar/Calendar";
 import LoadingPage from "./LoadingPage";
@@ -23,7 +29,13 @@ const DashboardPage: React.FC<{}> = () => {
   if (authState.isLoading || dashboardState.isLoading || !authState.user) return <LoadingPage />;
 
   const handleCancelInterview = async (interviewId: string) => {
-    // TODO: Implement this endpoint
+    const res = await dispatch(rejectInterview(interviewId));
+    if (res.meta.requestStatus === "fulfilled") {
+      dispatch(setNotification({ message: "Interview cancelled.", status: "information" }));
+    } else {
+      // @ts-ignore
+      dispatch(setNotification({ message: res?.error.message || "An error occured.", status: "error" }));
+    }
   };
 
   const handleUpdateAvailabilities = async (availabilityMap: { [key: string]: boolean }) => {
@@ -63,7 +75,9 @@ const DashboardPage: React.FC<{}> = () => {
           />
         </div>
         <div className="dashboard__searchResults">
-          <h2 className="dashboard__title">MATCHES FOR YOUR AVAILABILITY</h2>
+          {dashboardState.searchedAvailabilities.length > 0 && (
+            <h2 className="dashboard__title">MATCHES FOR YOUR AVAILABILITY</h2>
+          )}
           {dashboardState.searchedAvailabilities.map((availability) => (
             <AvailabilityCard
               key={availability.id}
