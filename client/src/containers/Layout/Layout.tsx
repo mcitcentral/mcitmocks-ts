@@ -1,13 +1,14 @@
-import { useDispatch } from "react-redux";
+import { useEffect } from "react";
 
 import Header from "../../components/Header";
+import NotificationBar from "../NotificationBar/NotificationBar";
+import { useAppDispatch, useAppSelector } from "../../hooks";
 import { fetchUserByAccessToken, logoutUser } from "../../store/authReducer";
-import { useAppSelector } from "../../hooks";
-import { useEffect } from "react";
 import { confirmInterview, fetchInterviews, rejectInterview } from "../../store/dashboardReducer";
+import { setNotification } from "../../store/notificationReducer";
 
 const Layout: React.FC<{}> = ({ children }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
   const interviewsAsInvitee = useAppSelector((state) => state.dashboard.interviewsAsInvitee);
   const invitations = interviewsAsInvitee.filter((interview) => interview.status === "INVITED");
@@ -18,8 +19,25 @@ const Layout: React.FC<{}> = ({ children }) => {
 
   const onLogin = (accessToken: string) => dispatch(fetchUserByAccessToken(accessToken));
   const handleLogout = () => dispatch(logoutUser());
-  const handleConfirmInterview = (interviewId: string) => dispatch(confirmInterview(interviewId));
-  const handleRejectInterview = (interviewId: string) => dispatch(rejectInterview(interviewId));
+
+  const handleConfirmInterview = async (interviewId: string) => {
+    const res = await dispatch(confirmInterview(interviewId));
+    if (res.meta.requestStatus === "fulfilled") {
+      dispatch(setNotification({ message: "Interview confirmed!", status: "information" }));
+    } else {
+      // @ts-ignore
+      dispatch(setNotification({ message: res?.error.message || "An error occured.", status: "error" }));
+    }
+  };
+  const handleRejectInterview = async (interviewId: string) => {
+    const res = await dispatch(rejectInterview(interviewId));
+    if (res.meta.requestStatus === "fulfilled") {
+      dispatch(setNotification({ message: "Interview cancelled!", status: "information" }));
+    } else {
+      // @ts-ignore
+      dispatch(setNotification({ message: res?.error.message || "An error occured.", status: "error" }));
+    }
+  };
 
   return (
     <>
@@ -31,6 +49,7 @@ const Layout: React.FC<{}> = ({ children }) => {
         handleConfirmInterview={handleConfirmInterview}
         handleRejectInterview={handleRejectInterview}
       />
+      <NotificationBar key="notification" />
       <main>{children}</main>
     </>
   );

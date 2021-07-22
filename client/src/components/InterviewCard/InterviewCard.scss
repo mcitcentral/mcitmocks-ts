@@ -24,6 +24,7 @@
 
   &__msg {
     grid-column: 1 / span 3;
+    align-self: center;
     text-align: center;
     font-family: $plex-mono;
     color: $gray-400;

@@ -4,6 +4,7 @@ import { shallowEqual } from "react-redux";
 import Layout from "../containers/Layout";
 import { useAppDispatch, useAppSelector } from "../hooks";
 import { fetchAll, searchAvailabilities, sendInvitation, updateAvailabilities } from "../store/dashboardReducer";
+import { setNotification } from "../store/notificationReducer";
 import Calendar from "../components/Calendar/Calendar";
 import LoadingPage from "./LoadingPage";
 import "../styles/DashboardPage.scss";
@@ -35,6 +36,7 @@ const DashboardPage: React.FC<{}> = () => {
 
   const handleSendInvitation = async (availabilityId: string) => {
     dispatch(sendInvitation(availabilityId));
+    dispatch(setNotification({ message: "Invitation sent!", status: "success" }));
   };
 
   return (

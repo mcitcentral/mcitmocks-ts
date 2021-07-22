@@ -1,0 +1,36 @@
+@import "../../styles/Variables.scss";
+
+.notificationBar {
+  position: fixed;
+  z-index: 3;
+  width: 100vw;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: top 300ms;
+  &__msg {
+    font-family: $inter;
+  }
+  svg {
+    margin-right: 5px;
+  }
+  &[data-active="true"] {
+    top: 0px;
+  }
+  &[data-active="false"] {
+    top: -40px;
+  }
+  &[data-status="success"] {
+    background-color: $green-100;
+    color: $green-500;
+  }
+  &[data-status="error"] {
+    background-color: $red-100;
+    color: $red-500;
+  }
+  &[data-status="information"] {
+    background-color: $blue-100;
+    color: $blue-500;
+  }
+}

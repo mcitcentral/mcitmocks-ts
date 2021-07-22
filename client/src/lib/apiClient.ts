@@ -29,16 +29,28 @@ const apiClient = {
     return convertInterviewResponse(response);
   },
   rejectInterview: async (interviewId: string) => {
-    const response = await axios.post(`/interviews/${interviewId}`, { status: InterviewStatus.CANCELLED });
-    return convertInterviewResponse(response);
+    try {
+      const response = await axios.post(`/interviews/${interviewId}`, { status: InterviewStatus.CANCELLED });
+      return convertInterviewResponse(response);
+    } catch (e) {
+      throw new Error(e.response.data.error);
+    }
   },
   confirmInterview: async (interviewId: string) => {
-    const response = await axios.post(`/interviews/${interviewId}`, { status: InterviewStatus.CONFIRMED });
-    return convertInterviewResponse(response);
+    try {
+      const response = await axios.post(`/interviews/${interviewId}`, { status: InterviewStatus.CONFIRMED });
+      return convertInterviewResponse(response);
+    } catch (e) {
+      throw new Error(e.response.data.error);
+    }
   },
   sendInvitation: async (availabilityId: string) => {
-    const response = await axios.post(`/interviews`, { availabilityId });
-    return convertInterviewResponse(response);
+    try {
+      const response = await axios.post(`/interviews`, { availabilityId });
+      return convertInterviewResponse(response);
+    } catch (e) {
+      throw new Error(e.response.data.error);
+    }
   },
 
   // AVAILABILITY

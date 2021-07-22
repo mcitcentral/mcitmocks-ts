@@ -5,7 +5,6 @@ import apiClient from "../lib/apiClient";
 
 export const fetchInterviews = createAsyncThunk("fetchInterviews", async () => {
   const interviewResponse = await apiClient.getInterviews();
-  console.log(interviewResponse);
   return interviewResponse;
 });
 
@@ -77,16 +76,13 @@ const dashboardSlice = createSlice({
         state.isLoading = false;
       }
     );
-    builder.addMatcher(
-      isAnyOf(fetchAll.rejected, fetchInterviews.rejected, confirmInterview.rejected, rejectInterview.rejected),
-      (state) => {
-        state.availabilities = [];
-        state.interviews = [];
-        state.interviewsAsInviter = [];
-        state.interviewsAsInvitee = [];
-        state.isLoading = false;
-      }
-    );
+    builder.addMatcher(isAnyOf(fetchAll.rejected, fetchInterviews.rejected), (state) => {
+      state.availabilities = [];
+      state.interviews = [];
+      state.interviewsAsInviter = [];
+      state.interviewsAsInvitee = [];
+      state.isLoading = false;
+    });
     builder.addMatcher(isFulfilled(fetchAll), (state, action) => {
       state.availabilities = action.payload.availabilityResponse;
       state.interviews = [
