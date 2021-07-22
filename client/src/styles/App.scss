@@ -12,6 +12,12 @@ a {
   color: inherit;
 }
 
+div,
+input,
+button {
+  box-sizing: border-box;
+}
+
 button {
   background-color: white;
   box-sizing: border-box;
