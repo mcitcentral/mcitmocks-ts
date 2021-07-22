@@ -48,3 +48,4 @@ const Header: React.FC<HeaderProps> = ({ isAuthenticated, onLogin }) => {
 };
 
 export default Header;
+export {LoginButton};
