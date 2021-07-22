@@ -23,10 +23,10 @@ const Invitation: React.FC<invitationProps> = ({ interview, handleConfirmIntervi
       </div>
       <div className="invitation__right">
         <button className="invitation__button" onClick={() => handleRejectInterview(interview.id)}>
-          <MdClose className="timesIcon" />
+          <MdClose color="#e02424" size={25} />
         </button>
         <button className="invitation__button" onClick={() => handleConfirmInterview(interview.id)}>
-          <MdCheck className="checkIcon" />
+          <MdCheck color="#31c48d" size={25} />
         </button>
       </div>
     </div>
