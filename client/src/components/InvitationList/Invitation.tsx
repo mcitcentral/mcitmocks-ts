@@ -7,9 +7,11 @@ import "./InvitationList.scss";
 
 export interface invitationProps {
   interview: InterviewWithUserInfo;
+  handleConfirmInterview: (interviewId: string) => void;
+  handleRejectInterview: (interviewId: string) => void;
 }
 
-const Invitation: React.FC<invitationProps> = ({ interview }) => {
+const Invitation: React.FC<invitationProps> = ({ interview, handleConfirmInterview, handleRejectInterview }) => {
   const name = interview.inviter.name;
   const date = format(interview.startTime, "MMMM d 'at' h:mma");
 
@@ -20,10 +22,10 @@ const Invitation: React.FC<invitationProps> = ({ interview }) => {
         <div className="invitation__time">{date}</div>
       </div>
       <div className="invitation__right">
-        <button className="invitation__button">
+        <button className="invitation__button" onClick={() => handleRejectInterview(interview.id)}>
           <MdClose className="timesIcon" />
         </button>
-        <button className="invitation__button">
+        <button className="invitation__button" onClick={() => handleConfirmInterview(interview.id)}>
           <MdCheck className="checkIcon" />
         </button>
       </div>

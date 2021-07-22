@@ -9,10 +9,13 @@
   margin: 0 auto;
   &__top {
     width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
+    display: grid;
+    grid-template-columns: repeat(12, 80px);
+    grid-column-gap: 20px;
     margin-bottom: 50px;
+    &Left {
+      grid-column: 1 / span 7;
+    }
   }
   &__title {
     font-family: "IBM Plex Mono", monospace;

@@ -8,6 +8,7 @@ import InvitationList from "../InvitationList/InvitationList";
 import { InterviewWithUserInfo } from "../../../../@types";
 import useOnClickOutside from "../../hooks/useOnClickOutside";
 import MenuDropdown from "./MenuDropdown";
+import { useEffect } from "react";
 
 interface LoginButtonProps {
   onClick: () => void;
@@ -28,15 +29,27 @@ export interface HeaderProps {
   isAuthenticated: boolean;
   onLogin: (accessToken: string) => void;
   handleLogout: () => void;
+  handleConfirmInterview: (interviewId: string) => void;
+  handleRejectInterview: (interviewId: string) => void;
 }
 
-const Header: React.FC<HeaderProps> = ({ isAuthenticated, onLogin, invitations, handleLogout }) => {
+const Header: React.FC<HeaderProps> = ({
+  isAuthenticated,
+  onLogin,
+  invitations,
+  handleLogout,
+  handleConfirmInterview,
+  handleRejectInterview,
+}) => {
   const onSuccess = async (res: any) => onLogin(res.tokenId);
 
   const inboxRef = useRef<HTMLDivElement>(null);
   const [isInboxActive, setIsInboxActive] = useState<boolean>(false);
   const toggleInbox = () => setIsInboxActive((prev) => !prev);
   useOnClickOutside(inboxRef, () => setIsInboxActive(false));
+  useEffect(() => {
+    if (invitations.length === 0) setIsInboxActive(false);
+  }, [invitations]);
 
   const menuRef = useRef<HTMLDivElement>(null);
   const [isMenuActive, setIsMenuActive] = useState<boolean>(false);
@@ -51,7 +64,14 @@ const Header: React.FC<HeaderProps> = ({ isAuthenticated, onLogin, invitations, 
       <div className="header__right">
         {isAuthenticated ? (
           <>
-            {isInboxActive && <InvitationList ref={inboxRef} invitations={invitations} />}
+            {isInboxActive && (
+              <InvitationList
+                ref={inboxRef}
+                invitations={invitations}
+                handleConfirmInterview={handleConfirmInterview}
+                handleRejectInterview={handleRejectInterview}
+              />
+            )}
             {isMenuActive && <MenuDropdown ref={menuRef} handleLogout={handleLogout} />}
             <button className="header__button" disabled={invitations.length === 0} onClick={toggleInbox}>
               <FaInbox color="white" size={25} />
