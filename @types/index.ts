@@ -29,9 +29,7 @@ export interface GetInterviewResponse {
 }
 
 export interface CreateInterviewRequest {
-  // TODO: Update to use availabilityId only to not reveal userId to others
-  inviteeId: string;
-  startTime: string;
+  availabilityId: string;
 }
 
 export interface UpdateInterviewRequest {
@@ -39,7 +37,7 @@ export interface UpdateInterviewRequest {
 }
 
 export interface GetAvailabilitiesResponse {
-  availabilities: Availability[];
+  availabilities: AvailabilityWithUser[];
 }
 
 export type UserPreferences = Omit<User, "id" | "name" | "email" | "imageUrl">;

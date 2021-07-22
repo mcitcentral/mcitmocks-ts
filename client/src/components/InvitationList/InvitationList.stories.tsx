@@ -1,23 +1,17 @@
-import Header, { HeaderProps } from "./Header";
-import { Story } from "@storybook/react";
 import { CodingLanguage, QuestionDifficulty, QuestionType } from "@prisma/client";
+import { Story } from "@storybook/react";
+import { ComponentProps } from "react";
+import InvitationList from "./InvitationList";
 
 export default {
-  title: "Header",
-  component: Header,
-  argTypes: {
-    onLogin: { action: "login" },
-  },
+  title: "InvitationList",
+  component: InvitationList,
 };
 
-const Template: Story<HeaderProps> = (args) => <Header {...args} />;
+const Template: Story<ComponentProps<typeof InvitationList>> = (args) => <InvitationList {...args} />;
 
-export const NotAuthenticated = Template.bind({});
-NotAuthenticated.args = { isAuthenticated: false, invitations: [] };
-
-export const Authenticated = Template.bind({});
-Authenticated.args = {
-  isAuthenticated: true,
+export const InvitationGroup = Template.bind({});
+InvitationGroup.args = {
   invitations: [
     {
       id: "000",
@@ -41,7 +35,7 @@ Authenticated.args = {
       },
     },
     {
-      id: "001",
+      id: "000",
       inviterId: "John Smith",
       inviteeId: "b",
       status: "INVITED",
@@ -62,7 +56,7 @@ Authenticated.args = {
       },
     },
     {
-      id: "002",
+      id: "000",
       inviterId: "John Smith",
       inviteeId: "b",
       status: "INVITED",
@@ -83,7 +77,7 @@ Authenticated.args = {
       },
     },
     {
-      id: "003",
+      id: "000",
       inviterId: "John Smith",
       inviteeId: "b",
       status: "INVITED",

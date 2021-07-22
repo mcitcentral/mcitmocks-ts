@@ -1,6 +1,7 @@
-import { Availability } from "@prisma/client";
+import { Availability, InterviewStatus } from "@prisma/client";
 import axios from "axios";
 import { AvailabilityWithUser, GetAvailabilitiesResponse, GetInterviewResponse } from "../../../@types";
+import { convertAvailabilitiesResponse, convertInterviewResponse } from "./utils";
 
 axios.defaults.baseURL = "/api";
 
@@ -14,6 +15,9 @@ const apiClient = {
     const response = await axios.get("/auth/user");
     return response.data;
   },
+  logoutUser: async () => {
+    await axios.get("/auth/logout");
+  },
 
   // INTERVIEW
   getInterview: async (interviewId: string) => {
@@ -22,41 +26,45 @@ const apiClient = {
   },
   getInterviews: async () => {
     const response = await axios.get<GetInterviewResponse>(`/interviews`);
-    const interviewsAsInvitee = response.data.interviewsAsInvitee.map((interview) => ({
-      ...interview,
-      startTime: new Date(interview.startTime),
-    }));
-    const interviewsAsInviter = response.data.interviewsAsInviter.map((interview) => ({
-      ...interview,
-      startTime: new Date(interview.startTime),
-    }));
-    return { interviewsAsInvitee, interviewsAsInviter };
+    return convertInterviewResponse(response);
+  },
+  rejectInterview: async (interviewId: string) => {
+    try {
+      const response = await axios.post(`/interviews/${interviewId}`, { status: InterviewStatus.CANCELLED });
+      return convertInterviewResponse(response);
+    } catch (e) {
+      throw new Error(e.response.data.error);
+    }
+  },
+  confirmInterview: async (interviewId: string) => {
+    try {
+      const response = await axios.post(`/interviews/${interviewId}`, { status: InterviewStatus.CONFIRMED });
+      return convertInterviewResponse(response);
+    } catch (e) {
+      throw new Error(e.response.data.error);
+    }
+  },
+  sendInvitation: async (availabilityId: string) => {
+    try {
+      const response = await axios.post(`/interviews`, { availabilityId });
+      return convertInterviewResponse(response);
+    } catch (e) {
+      throw new Error(e.response.data.error);
+    }
   },
 
   // AVAILABILITY
   getAvailabilities: async (): Promise<Availability[]> => {
     const response = await axios.get<GetAvailabilitiesResponse>(`/availability`);
-    const availabilities = response.data.availabilities.map((availability) => ({
-      ...availability,
-      startTime: new Date(availability.startTime),
-    }));
-    return availabilities;
+    return convertAvailabilitiesResponse(response);
   },
   searchAvailabilities: async (startTime: string | string[]): Promise<AvailabilityWithUser[]> => {
     const response = await axios.post(`/availability/search`, { startTime });
-    const availabilities = response.data.availabilities.map((availability) => ({
-      ...availability,
-      startTime: new Date(availability.startTime),
-    }));
-    return availabilities;
+    return convertAvailabilitiesResponse(response);
   },
   updateAvailabilities: async (availabilityMap: { [key: string]: boolean }): Promise<Availability[]> => {
     const response = await axios.put(`/availability`, { availabilities: availabilityMap });
-    const availabilities = response.data.availabilities.map((availability) => ({
-      ...availability,
-      startTime: new Date(availability.startTime),
-    }));
-    return availabilities;
+    return convertAvailabilitiesResponse(response);
   },
 };
 

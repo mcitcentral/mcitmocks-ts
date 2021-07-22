@@ -32,5 +32,10 @@ export default function authController(prismaClient: PrismaClient) {
     }
   });
 
+  authRouter.get("/logout", async (_req: Request, res: Response) => {
+    res.cookie("mcitmocks", "", { expires: new Date(0), httpOnly: true });
+    res.send();
+  });
+
   return authRouter;
 }

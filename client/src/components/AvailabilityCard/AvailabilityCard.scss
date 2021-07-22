@@ -1,6 +1,7 @@
 @import "../../styles/Variables.scss";
 
 .availabilityCard {
+  width: 100%;
   display: grid;
   grid-template-columns: 90px 1fr 75px;
   grid-column-gap: 15px;

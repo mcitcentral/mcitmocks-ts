@@ -1,0 +1,59 @@
+@import "../../styles/Variables.scss";
+
+.invitationList {
+  width: 300px;
+  padding: 25px;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  box-sizing: border-box;
+  box-shadow: 0px 0px 25px rgba(229, 231, 235, 0.5);
+  border-radius: 0px 0px 10px 10px;
+  &__title {
+    font-family: $plex-mono;
+    font-size: "12px";
+    line-height: "16px";
+  }
+}
+
+.invitation {
+  width: 100%;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  &__right {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+
+  &__name {
+    font-family: $inter;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 1.2em;
+  }
+  &__time {
+    font-family: $inter;
+    font-size: 14px;
+    line-height: 1.2em;
+  }
+  &__button {
+    border: 2px solid #f4f5f7;
+    border-radius: 60px;
+    &:hover {
+      border-color: $blue-100;
+    }
+  }
+  .checkIcon {
+    width: 20px;
+    height: 25px;
+    color: #31c48d;
+  }
+  .timesIcon {
+    width: 20px;
+    height: 25px;
+    color: #e02424;
+  }
+}

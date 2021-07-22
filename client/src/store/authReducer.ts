@@ -10,6 +10,10 @@ export const fetchUserByJWT = createAsyncThunk("auth/fetchUserByJWT", async () =
   return await apiClient.getUser();
 });
 
+export const logoutUser = createAsyncThunk("auth/logoutUser", async () => {
+  return await apiClient.logoutUser();
+});
+
 const authSlice = createSlice({
   name: "auth",
   initialState: { user: null as User | null, isLoading: true, isAuthenticated: false },
@@ -23,7 +27,7 @@ const authSlice = createSlice({
         state.isAuthenticated = false;
       }
     },
-    resetUser(state, _action) {
+    resetUser(state) {
       state.user = null;
       state.isAuthenticated = false;
       state.isLoading = true;
@@ -46,6 +50,11 @@ const authSlice = createSlice({
       state.isLoading = false;
     },
     [fetchUserByJWT.rejected.type]: (state) => {
+      state.user = null;
+      state.isAuthenticated = false;
+      state.isLoading = false;
+    },
+    [logoutUser.fulfilled.type]: (state) => {
       state.user = null;
       state.isAuthenticated = false;
       state.isLoading = false;

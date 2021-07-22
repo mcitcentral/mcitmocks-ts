@@ -22,6 +22,13 @@
     align-items: flex-end;
   }
 
+  &__msg {
+    grid-column: 1 / span 3;
+    align-self: center;
+    text-align: center;
+    font-family: $plex-mono;
+    color: $gray-400;
+  }
   &__image {
     border-radius: 100px;
     background-color: $coolGray-100;

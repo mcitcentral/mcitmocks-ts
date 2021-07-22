@@ -41,11 +41,11 @@ export default function interviewController(prismaClient: PrismaClient) {
   });
 
   interviewRouter.post("/", async (req: Request<{}, {}, CreateInterviewRequest>, res: Response) => {
-    const { inviteeId, startTime } = req.body;
+    const { availabilityId } = req.body;
     const userId = req.user?.id;
     try {
       if (!userId) return res.status(401).send({ error: "Not Authenticated." });
-      await interviewService.inviteInterview(userId, inviteeId, startTime);
+      await interviewService.inviteInterview(userId, availabilityId);
       const interviews = await interviewRepository.getInterviewsByUserId(userId);
       res.status(200).json(interviews);
     } catch (e) {

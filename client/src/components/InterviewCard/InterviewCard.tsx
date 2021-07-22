@@ -16,7 +16,7 @@ interface InterviewWithUsers extends Interview {
 
 export interface InterviewCardProps {
   user: User;
-  interview: InterviewWithUsers;
+  interview?: InterviewWithUsers;
   handleCancelInterview: (interviewId: string) => Promise<void>;
 }
 
@@ -30,6 +30,14 @@ const interviewStatusMap = {
 
 const InterviewCard: React.FC<InterviewCardProps> = ({ interview, user, handleCancelInterview }) => {
   const [isCancelActive, setIsCancelActive] = useState<boolean>(false);
+
+  if (!interview)
+    return (
+      <div className="interviewCard">
+        <div className="interviewCard__msg">YOU DON'T HAVE ANY UPCOMING INTERVIEWS</div>
+      </div>
+    );
+
   const startTimeLocal = utcToZonedTime(interview.startTime, user.timeZone);
   const otherUser = interview.inviteeId === user.id ? interview.inviter : interview.invitee;
   const isInterviewNow =

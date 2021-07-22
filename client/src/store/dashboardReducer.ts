@@ -1,7 +1,12 @@
 import { Availability } from "@prisma/client";
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, isAnyOf, isFulfilled, isRejected } from "@reduxjs/toolkit";
 import { AvailabilityWithUser, InterviewWithUserInfo } from "../../../@types";
 import apiClient from "../lib/apiClient";
+
+export const fetchInterviews = createAsyncThunk("fetchInterviews", async () => {
+  const interviewResponse = await apiClient.getInterviews();
+  return interviewResponse;
+});
 
 export const fetchAll = createAsyncThunk("fetchAll", async () => {
   const [availabilityResponse, interviewResponse] = await Promise.all([
@@ -20,6 +25,18 @@ export const updateAvailabilities = createAsyncThunk(
 
 export const searchAvailabilities = createAsyncThunk("searchAvailabilities", async (startTimes: string | string[]) => {
   return await apiClient.searchAvailabilities(startTimes);
+});
+
+export const confirmInterview = createAsyncThunk("confirmInterview", async (interviewId: string) => {
+  return await apiClient.confirmInterview(interviewId);
+});
+
+export const rejectInterview = createAsyncThunk("rejectInterview", async (interviewId: string) => {
+  return await apiClient.rejectInterview(interviewId);
+});
+
+export const sendInvitation = createAsyncThunk("sendInvitation", async (availabilityId: string) => {
+  return await apiClient.sendInvitation(availabilityId);
 });
 
 interface DashboardState {
@@ -44,8 +61,29 @@ const dashboardSlice = createSlice({
   name: "dashboard",
   initialState,
   reducers: {},
-  extraReducers: {
-    [fetchAll.fulfilled.type]: (state, action) => {
+  extraReducers: (builder) => {
+    builder.addMatcher(
+      isAnyOf(
+        fetchInterviews.fulfilled,
+        confirmInterview.fulfilled,
+        rejectInterview.fulfilled,
+        sendInvitation.fulfilled
+      ),
+      (state, action) => {
+        state.interviews = [...action.payload.interviewsAsInvitee, ...action.payload.interviewsAsInviter];
+        state.interviewsAsInvitee = action.payload.interviewsAsInvitee;
+        state.interviewsAsInviter = action.payload.interviewsAsInviter;
+        state.isLoading = false;
+      }
+    );
+    builder.addMatcher(isAnyOf(fetchAll.rejected, fetchInterviews.rejected), (state) => {
+      state.availabilities = [];
+      state.interviews = [];
+      state.interviewsAsInviter = [];
+      state.interviewsAsInvitee = [];
+      state.isLoading = false;
+    });
+    builder.addMatcher(isFulfilled(fetchAll), (state, action) => {
       state.availabilities = action.payload.availabilityResponse;
       state.interviews = [
         ...action.payload.interviewResponse.interviewsAsInvitee,
@@ -54,26 +92,19 @@ const dashboardSlice = createSlice({
       state.interviewsAsInvitee = action.payload.interviewResponse.interviewsAsInvitee;
       state.interviewsAsInviter = action.payload.interviewResponse.interviewsAsInviter;
       state.isLoading = false;
-    },
-    [fetchAll.rejected.type]: (state) => {
-      state.availabilities = [];
-      state.interviews = [];
-      state.interviewsAsInviter = [];
-      state.interviewsAsInvitee = [];
-      state.isLoading = false;
-    },
-    [searchAvailabilities.fulfilled.type]: (state, action) => {
+    });
+    builder.addMatcher(isFulfilled(searchAvailabilities), (state, action) => {
       state.searchedAvailabilities = action.payload;
-    },
-    [searchAvailabilities.rejected.type]: (state) => {
+    });
+    builder.addMatcher(isRejected(searchAvailabilities), (state) => {
       state.searchedAvailabilities = [];
-    },
-    [updateAvailabilities.fulfilled.type]: (state, action) => {
+    });
+    builder.addMatcher(isFulfilled(updateAvailabilities), (state, action) => {
       state.availabilities = action.payload;
-    },
-    [updateAvailabilities.rejected.type]: (state) => {
+    });
+    builder.addMatcher(isRejected(updateAvailabilities), (state) => {
       state.availabilities = [];
-    },
+    });
   },
 });
 

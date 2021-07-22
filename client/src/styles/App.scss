@@ -7,6 +7,17 @@ main {
   background-color: $coolGray-50;
 }
 
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+div,
+input,
+button {
+  box-sizing: border-box;
+}
+
 button {
   background-color: white;
   box-sizing: border-box;
