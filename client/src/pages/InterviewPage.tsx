@@ -9,6 +9,7 @@ import "ace-builds/src-noconflict/ext-language_tools";
 
 import { fetchInterview, setCode, setInterviewId } from "../store/interviewReducer";
 import QuestionSidebar from "../components/QuestionSidebar";
+import Video from "../components/Video";
 import { RootState } from "../store";
 import LoadingPage from "./LoadingPage";
 import "../styles/InterviewPage.scss";
@@ -55,6 +56,7 @@ const InterviewPage: React.FC<{}> = () => {
 
   return (
     <div className="interviewPage">
+      <Video interviewId={interviewId} />
       <QuestionSidebar question={interviewState.interview.questions[0]} isInterviewer={isInterviewer} />
       <div className="interviewPage__right">
         {

@@ -45,7 +45,22 @@ io.on("connection", (socket: Socket) => {
   console.log("A client has connected to websockets");
   socket.join(socket.handshake.query.roomId);
   socket.on("update", ({ roomId, message }) => {
-    io.to(roomId).emit("update", message);
+    socket.to(roomId).emit("update", message);
+  });
+  socket.on("requestVideo", ({ roomId }) => {
+    console.log("requestVideo");
+    socket.to(roomId).emit("requestVideo");
+  });
+  socket.on("offerVideo", ({ roomId, message }) => {
+    console.log("offerVideo");
+    socket.to(roomId).emit("offerVideo", message);
+  });
+  socket.on("answerVideo", ({ roomId, message }) => {
+    console.log("answerVideo");
+    socket.to(roomId).emit("answerVideo", message);
+  });
+  socket.on("icecandidate", ({ roomId, message }) => {
+    socket.to(roomId).emit("icecandidate", message);
   });
   socket.on("disconnect", function () {
     console.log("A client has disconnected from websockets");
