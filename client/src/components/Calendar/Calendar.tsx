@@ -31,10 +31,12 @@ const Calendar: React.FC<CalendarProps> = ({
   updateAvailabilities,
 }) => {
   const [startDate, setStartDate] = useState<Date>(startOfISOWeek(new Date()));
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const _availabilityMap = mapAvailabilities(availabilities);
   const [availabilityMap, setAvailabilityMap] = useState<{ [key: string]: boolean }>(_availabilityMap);
   useEffect(() => {
+    setIsLoading(false);
     const _availabilityMap = mapAvailabilities(availabilities);
     setAvailabilityMap(_availabilityMap);
   }, [availabilities]);
@@ -62,8 +64,9 @@ const Calendar: React.FC<CalendarProps> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [availabilityMap]);
 
-  const handleUpdateAvailabilities = () => {
-    updateAvailabilities(availabilityMap);
+  const handleUpdateAvailabilities = async () => {
+    await updateAvailabilities(availabilityMap);
+    setIsLoading(true);
   };
 
   return (
@@ -92,6 +95,7 @@ const Calendar: React.FC<CalendarProps> = ({
           })}
         </div>
         <div className="calendar__mainBody">
+          {isLoading && <div className="calendar__loading">Loading...</div>}
           {Array.from({ length: 7 }, (_, i) => i).map((offset) => {
             const date = add(startDate, { days: offset });
             return (
