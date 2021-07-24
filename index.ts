@@ -3,6 +3,7 @@ dotenv.config();
 
 import { PrismaClient } from ".prisma/client";
 import express, { Request, Response } from "express";
+import path from "path";
 import cookieParser from "cookie-parser";
 import jwt from "express-jwt";
 import { Socket } from "socket.io";
@@ -28,14 +29,14 @@ app.use(
   }).unless({ path: ["/api/auth/token"] })
 );
 
-app.use("/", express.static("dist"));
 app.use("/api/auth", authController(prismaClient));
 app.use("/api/interviews", interviewController(prismaClient));
 app.use("/api/availability", availabilityController(prismaClient));
 app.use("/api/users", userController(prismaClient));
 
-app.use((err: Error, _req: Request, res: Response) => {
-  if (err.name === "UnauthorizedError") res.status(401).send("Unauthorized token");
+app.use(express.static(path.resolve(__dirname, "dist")));
+app.get("/*", (_req: Request, res: Response) => {
+  res.sendFile(path.resolve(__dirname, "dist", "index.html"));
 });
 
 const server = require("http").createServer(app);
