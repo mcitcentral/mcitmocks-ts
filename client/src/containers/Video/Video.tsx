@@ -41,18 +41,24 @@ const Video: React.FC<VideoProps> = ({ agoraId, interviewId }) => {
 
   return (
     <>
-      <Draggable>
-        <div id="videoLocal">
-          {!localVideoTrack && (
-            <button onClick={handleStart}>
-              <FaVideo color="white" size={24} />
-            </button>
-          )}
-        </div>
-      </Draggable>
-      <Draggable>
-        <div id="videoRemote">{!remoteVideoTrack && <p>Waiting for interview partner...</p>}</div>
-      </Draggable>
+      {
+        // @ts-ignore
+        <Draggable>
+          <div id="videoLocal">
+            {!localVideoTrack && (
+              <button onClick={handleStart}>
+                <FaVideo color="white" size={24} />
+              </button>
+            )}
+          </div>
+        </Draggable>
+      }
+      {
+        // @ts-ignore
+        <Draggable>
+          <div id="videoRemote">{!remoteVideoTrack && <p>Waiting for interview partner...</p>}</div>
+        </Draggable>
+      }
     </>
   );
 };
