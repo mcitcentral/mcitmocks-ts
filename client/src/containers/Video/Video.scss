@@ -1,0 +1,36 @@
+@import "../../styles/Variables.scss";
+
+#videoLocal,
+#videoRemote {
+  overflow: hidden;
+  position: absolute;
+  height: 180px;
+  width: 300px;
+  z-index: 5;
+  background-color: white;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  p {
+    font-family: $inter;
+    color: $gray-500;
+  }
+  button {
+    z-index: 6;
+    height: 50px;
+    width: 50px;
+    background-color: $gray-800;
+    border-radius: 50px;
+  }
+}
+
+#videoLocal {
+  bottom: 25px;
+  right: 25px;
+}
+
+#videoRemote {
+  bottom: 230px;
+  right: 25px;
+}

@@ -3,12 +3,14 @@ import { InterviewStatus } from "@prisma/client";
 import express, { Request, Response } from "express";
 import { CreateInterviewRequest, UpdateInterviewRequest } from "../@types";
 import InterviewRepository from "../models/InterviewRepository";
+import AgoraService from "../services/AgoraService";
 import InterviewService from "../services/InterviewService";
 
 export default function interviewController(prismaClient: PrismaClient) {
   const interviewRouter = express.Router();
   const interviewRepository = new InterviewRepository(prismaClient);
   const interviewService = new InterviewService(prismaClient);
+  const agoraService = new AgoraService();
 
   interviewRouter.get("/", async (req: Request, res: Response) => {
     const status = (req.query.status as InterviewStatus) || null;
@@ -31,10 +33,10 @@ export default function interviewController(prismaClient: PrismaClient) {
       if (!userId) return res.status(401).send({ error: "Not Authenticated." });
       if (!interviewId) throw new Error("Error: invalid interviewId provided");
       const interview = await interviewRepository.getInterviewById(interviewId);
-      console.log({ interview, userId });
       if (userId !== interview.inviteeId && userId !== interview.inviterId)
         return res.status(401).send({ error: "You don't have permission to access this interview" });
-      res.status(200).send({ interview });
+      const agoraId = agoraService.generateAgoraToken(interview);
+      res.status(200).send({ interview, agoraId });
     } catch (e) {
       res.status(500).send({ error: e.message });
     }

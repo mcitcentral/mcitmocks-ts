@@ -10,15 +10,25 @@ interface InterviewWithQuestions extends Interview {
   questions: InterviewQuestion[];
 }
 
+const initialState: {
+  interviewId: string | null;
+  agoraId: string | null;
+  interview: InterviewWithQuestions | null;
+  code: string;
+  isLoading: boolean;
+  redirect: boolean;
+} = {
+  interviewId: null,
+  agoraId: null,
+  interview: null,
+  code: "",
+  isLoading: true,
+  redirect: false,
+};
+
 const interviewSlice = createSlice({
   name: "interview",
-  initialState: {
-    interviewId: null,
-    interview: null as InterviewWithQuestions | null,
-    code: "",
-    isLoading: true,
-    redirect: false,
-  },
+  initialState,
   reducers: {
     setInterviewId(state, action) {
       state.interviewId = action.payload;
@@ -33,6 +43,7 @@ const interviewSlice = createSlice({
   extraReducers: {
     [fetchInterview.fulfilled.type]: (state, action) => {
       state.interview = action.payload.interview;
+      state.agoraId = action.payload.agoraId;
       state.isLoading = false;
     },
     [fetchInterview.rejected.type]: (state) => {
