@@ -20,6 +20,7 @@
     }
   }
   &__main {
+    position: relative;
     padding-top: 25px;
     display: flex;
     flex-direction: column;
@@ -35,7 +36,6 @@
     font-family: "Inter", sans-serif;
   }
   &__mainBody {
-    position: relative;
     height: 470px;
     overflow-y: scroll;
   }
@@ -127,11 +127,12 @@
 
 .calendar-save-button {
   padding: 10px 30px 10px 30px;
-  width: 150px;
   height: 40px;
   border: none;
   background: #3f83f8;
   border-radius: 10px;
   color: white;
   margin-top: 25px;
+  font-size: 16px;
+  font-family: $inter;
 }

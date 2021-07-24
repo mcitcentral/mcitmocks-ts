@@ -1,10 +1,11 @@
 import { Availability, User } from "@prisma/client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { format, lastDayOfISOWeek, startOfISOWeek, sub, add } from "date-fns";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 
 import { InterviewWithUserInfo } from "../../../../@types";
 import Day from "./Day";
+import Loader from "../Loader";
 import "./Calendar.scss";
 
 interface CalendarProps {
@@ -32,6 +33,7 @@ const Calendar: React.FC<CalendarProps> = ({
 }) => {
   const [startDate, setStartDate] = useState<Date>(startOfISOWeek(new Date()));
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const bodyRef = useRef<HTMLDivElement>(null);
 
   const _availabilityMap = mapAvailabilities(availabilities);
   const [availabilityMap, setAvailabilityMap] = useState<{ [key: string]: boolean }>(_availabilityMap);
@@ -55,19 +57,17 @@ const Calendar: React.FC<CalendarProps> = ({
     setAvailabilityMap((prev) => ({ ...prev, [startTime.toISOString()]: !previous }));
   };
 
-  useEffect(() => {
+  const handleUpdateAvailabilities = async () => {
+    setIsLoading(true);
+    await updateAvailabilities(availabilityMap);
     const startTimes: string[] = [];
     for (const [startTime, isAvailable] of Object.entries(availabilityMap)) {
       if (isAvailable) startTimes.push(startTime);
     }
-    searchAvailabilities(startTimes);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [availabilityMap]);
-
-  const handleUpdateAvailabilities = async () => {
-    await updateAvailabilities(availabilityMap);
-    setIsLoading(true);
+    await searchAvailabilities(startTimes);
   };
+
+  useEffect(() => bodyRef.current?.scrollTo(0, 480), [bodyRef]);
 
   return (
     <div className="calendar">
@@ -83,6 +83,11 @@ const Calendar: React.FC<CalendarProps> = ({
         </div>
       </div>
       <div className="calendar__main">
+        {isLoading && (
+          <div className="calendar__loading">
+            <Loader />
+          </div>
+        )}
         <div className="calendar__mainHeader">
           {Array.from({ length: 7 }, (_, i) => i).map((offset) => {
             const date = add(startDate, { days: offset });
@@ -94,8 +99,7 @@ const Calendar: React.FC<CalendarProps> = ({
             );
           })}
         </div>
-        <div className="calendar__mainBody">
-          {isLoading && <div className="calendar__loading">Loading...</div>}
+        <div className="calendar__mainBody" ref={bodyRef}>
           {Array.from({ length: 7 }, (_, i) => i).map((offset) => {
             const date = add(startDate, { days: offset });
             return (
@@ -113,7 +117,7 @@ const Calendar: React.FC<CalendarProps> = ({
       </div>
       <div className="calendar__bottom">
         <button className="calendar-save-button" onClick={handleUpdateAvailabilities}>
-          Save
+          Save and Search
         </button>
       </div>
     </div>
