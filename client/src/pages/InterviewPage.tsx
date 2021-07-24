@@ -9,6 +9,7 @@ import "ace-builds/src-noconflict/ext-language_tools";
 
 import { fetchInterview, setCode, setInterviewId } from "../store/interviewReducer";
 import QuestionSidebar from "../components/QuestionSidebar";
+import Video from "../containers/Video";
 import { RootState } from "../store";
 import LoadingPage from "./LoadingPage";
 import "../styles/InterviewPage.scss";
@@ -51,10 +52,11 @@ const InterviewPage: React.FC<{}> = () => {
 
   // TODO: Push global notification before redirect
   if (interviewState.redirect) return <Redirect to="/" />;
-  if (interviewState.isLoading || !interviewState.interview) return <LoadingPage />;
+  if (interviewState.isLoading || !interviewState.interview || !interviewState.agoraId) return <LoadingPage />;
 
   return (
     <div className="interviewPage">
+      <Video interviewId={interviewId} agoraId={interviewState.agoraId} />
       <QuestionSidebar question={interviewState.interview.questions[0]} isInterviewer={isInterviewer} />
       <div className="interviewPage__right">
         {
