@@ -4,13 +4,14 @@
   "scripts": {
     "dev": "ts-node-dev index",
     "start": "node index",
-    "build": "yarn tsc && cd client && yarn && npm rebuild node-sass && yarn build",
+    "build": "yarn tsc && yarn db:seed:prod && cd client && yarn && npm rebuild node-sass && yarn build",
     "tsc": "tsc",
     "test": "jest --testTimeout=10000",
     "db:migrate": "prisma migrate deploy",
     "db:generate": "prisma generate",
     "db:reset": "prisma migrate reset",
     "db:seed": "prisma db seed --preview-feature",
+    "db:seed:prod": "node ./prisma/seedQuestions",
     "postinstall": "yarn db:migrate && yarn db:generate"
   },
   "dependencies": {
