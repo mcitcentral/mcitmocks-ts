@@ -1,4 +1,4 @@
-import { Interview, InterviewStatus, PrismaClient, User } from "@prisma/client";
+import { Interview, InterviewQuestion, InterviewStatus, PrismaClient, User } from "@prisma/client";
 import { Interviews } from "../@types";
 
 export default class InterviewRepository {
@@ -35,8 +35,20 @@ export default class InterviewRepository {
     return { interviewsAsInviter, interviewsAsInvitee };
   }
 
-  async createInterview(interview: Pick<Interview, "inviteeId" | "inviterId" | "startTime">): Promise<Interview> {
-    return this.prisma.interview.create({ data: { ...interview, status: InterviewStatus.INVITED } });
+  async createInterview(
+    interview: Pick<Interview, "inviteeId" | "inviterId" | "startTime">,
+    interviewQuestions: InterviewQuestion[]
+  ): Promise<Interview> {
+    const interviewQuestionIds = interviewQuestions.map(({ id }) => ({ id }));
+    return this.prisma.interview.create({
+      data: {
+        startTime: interview.startTime,
+        status: InterviewStatus.INVITED,
+        inviter: { connect: { id: interview.inviterId } },
+        invitee: { connect: { id: interview.inviteeId } },
+        questions: { connect: interviewQuestionIds },
+      },
+    });
   }
 
   async updateInterview(userId: string, interviewId: string, status: InterviewStatus): Promise<void> {

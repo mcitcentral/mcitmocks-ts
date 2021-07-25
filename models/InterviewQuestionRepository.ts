@@ -1,4 +1,4 @@
-import { PrismaClient, QuestionType } from ".prisma/client";
+import { PrismaClient, QuestionType, InterviewQuestion } from ".prisma/client";
 import { QuestionDifficulty } from "@prisma/client";
 import matter from "gray-matter";
 
@@ -36,5 +36,9 @@ export default class InterviewQuestionRepoistory {
       update: { questionName, questionText, questionDifficulty, questionType, answerText },
       create: { id, questionName, questionText, questionDifficulty, questionType, answerText },
     });
+  }
+
+  async getRandomInterviewQuestions(): Promise<InterviewQuestion[]> {
+    return this.prisma.$queryRaw<InterviewQuestion[]>(`SELECT * FROM interview_question ORDER BY RANDOM() LIMIT 2`);
   }
 }
