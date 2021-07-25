@@ -36,7 +36,6 @@ const Video: React.FC<VideoProps> = ({ agoraId, interviewId }) => {
     agoraClient.publish([_localAudioTrack, _localVideoTrack]);
     setLocalVideoTrack(_localVideoTrack);
     _localVideoTrack?.play("videoLocal");
-    _localAudioTrack?.play();
   };
 
   return (
