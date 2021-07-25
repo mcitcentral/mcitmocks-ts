@@ -1,4 +1,4 @@
-import { InterviewStatus, prisma, PrismaClient } from "@prisma/client";
+import { InterviewStatus, PrismaClient } from "@prisma/client";
 import AvailabilityRepository from "../models/AvailabilityRepository";
 import InterviewQuestionRepoistory from "../models/InterviewQuestionRepository";
 
