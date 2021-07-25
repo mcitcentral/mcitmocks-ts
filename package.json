@@ -24,6 +24,7 @@
     "express-jwt": "6.0.0",
     "google-auth-library": "7.1.0",
     "jsonwebtoken": "8.5.1",
+    "react-select": "^4.3.1",
     "socket.io": "4.1.2",
     "ts-node": "10.0.0"
   },
