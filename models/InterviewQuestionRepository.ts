@@ -39,6 +39,6 @@ export default class InterviewQuestionRepoistory {
   }
 
   async getRandomInterviewQuestions(): Promise<InterviewQuestion[]> {
-    return this.prisma.$queryRaw<InterviewQuestion[]>(`SELECT * FROM interview_question ORDER BY RANDOM() LIMIT 2`);
+    return this.prisma.$queryRaw<InterviewQuestion[]>(`SELECT * FROM interview_questions ORDER BY RANDOM() LIMIT 2`);
   }
 }
