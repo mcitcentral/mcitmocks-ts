@@ -44,7 +44,7 @@ const Calendar: React.FC<CalendarProps> = ({
   }, [availabilities]);
 
   const interviewMap = interviews.reduce((prev, curr) => {
-    prev[String(curr.startTime)] = curr;
+    prev[curr.startTime.toISOString()] = curr;
     return prev;
   }, {});
 

@@ -1,21 +1,32 @@
 import { InterviewStatus, PrismaClient } from "@prisma/client";
 import AvailabilityRepository from "../models/AvailabilityRepository";
+import InterviewQuestionRepoistory from "../models/InterviewQuestionRepository";
 
 import InterviewRepository from "../models/InterviewRepository";
 
 export default class InterviewService {
   interviewRepository: InterviewRepository;
   availabilityRepository: AvailabilityRepository;
+  interviewQuestionRepository: InterviewQuestionRepoistory;
 
   constructor(prismaClient: PrismaClient) {
     this.availabilityRepository = new AvailabilityRepository(prismaClient);
     this.interviewRepository = new InterviewRepository(prismaClient);
+    this.interviewQuestionRepository = new InterviewQuestionRepoistory(prismaClient);
   }
 
   async inviteInterview(inviterId: string, availabilityId: string): Promise<void> {
     const availability = await this.availabilityRepository.updateAvailability(availabilityId, { isTaken: true });
     const { userId, startTime } = availability;
-    await this.interviewRepository.createInterview({ inviteeId: userId, inviterId, startTime });
+    const interviewQuestions = await this.interviewQuestionRepository.getRandomInterviewQuestions();
+    await this.interviewRepository.createInterview(
+      {
+        inviteeId: userId,
+        inviterId,
+        startTime,
+      },
+      interviewQuestions
+    );
   }
 
   async updateInterview(userId: string, interviewId: string, status: InterviewStatus): Promise<void> {
