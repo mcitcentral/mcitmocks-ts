@@ -5,8 +5,8 @@ import Layout from "../containers/Layout";
 import UserSettingsCard from "../components/UserSettingsCard/UserSettingsCard";
 import { useAppDispatch, useAppSelector } from "../hooks";
 import LoadingPage from "./LoadingPage";
-import "../styles/DashboardPage.scss";
 import { UserPreferences } from "../../../@types";
+import "../styles/SettingsPage.scss";
 
 const SettingsPage: React.FC<{}> = () => {
   const dispatch = useAppDispatch();
@@ -21,8 +21,8 @@ const SettingsPage: React.FC<{}> = () => {
 
   return (
     <Layout>
-      <div className="userSettings">
-        <h2>USER SETTINGS</h2>
+      <div className="settings">
+        <h2 className="settings__title">USER SETTINGS</h2>
         <UserSettingsCard
           user={authState.user}
           handleUpdateSettings={handleUpdateSettings}

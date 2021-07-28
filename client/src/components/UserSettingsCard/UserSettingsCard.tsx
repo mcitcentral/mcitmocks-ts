@@ -1,13 +1,9 @@
 import { useState } from "react";
 import Select from "react-select";
-import { Interview, User, InterviewStatus, CodingLanguage, QuestionDifficulty, QuestionType } from "@prisma/client";
-import { FcCancel } from "react-icons/fc";
-
-import CodingLanguageTag from "../CodingLanguageTag/CodingLanguageTag";
-import QuestionDifficultyTag from "../QuestionDifficultyTag";
-import QuestionTypeTag from "../QuestionTypeTag/QuestionTypeTag";
-import { userInfo } from "os";
+import { User, CodingLanguage, QuestionDifficulty, QuestionType } from "@prisma/client";
+import { FiEdit3 } from "react-icons/fi";
 import { UserPreferences } from "../../../../@types";
+import "./UserSettingsCard.scss";
 
 const languageOptions = [
   { value: CodingLanguage.PYTHON, label: CodingLanguage.PYTHON },
@@ -32,30 +28,33 @@ export interface UserSettingsProps {
 }
 
 const UserSettingsCard: React.FC<UserSettingsProps> = ({ user, handleUpdateSettings }) => {
+  const [editMode, setEditMode] = useState(false);
+
   return (
     <div className="userSettingsCard">
-      <div className="userSetting">EMAIL</div>
-      <div className="fixedUserData">{user.email}</div>
-      <div className="userSetting">CODING LANGUAGES</div>
+      <div className="userSettingsCard__settingName">EMAIL</div>
+      <div className="userSettingsCard__text">{user.email}</div>
+      <div className="userSettingsCard__settingName">CODING LANGUAGES</div>
       <Select
         isMulti
         defaultValue={user.codingLanguage}
         options={languageOptions}
         onChange={(values) => handleUpdateSettings(user.id, values)}
       />
-      <div className="userSetting">DIFFICULTY</div>
+      <div className="userSettingsCard__settingName">DIFFICULTY</div>
       <Select
         defaultValue={user.questionDifficulty}
         options={difficultyOptions}
         onChange={(values) => handleUpdateSettings(user.id, values)}
       />
-      <div className="userSetting">QUESTION TYPES</div>
+      <div className="userSettingsCard__settingName">QUESTION TYPES</div>
       <Select
         isMulti
         defaultValue={user.questionTypes}
         options={questionTypeOptions}
         onChange={(values) => handleUpdateSettings(user.id, values)}
       />
+      <div className="userSettingsCard__editbutton">{editMode ? <div>save</div> : <FiEdit3 />}</div>
     </div>
   );
 };
