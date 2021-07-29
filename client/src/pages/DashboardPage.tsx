@@ -1,5 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { shallowEqual } from "react-redux";
+import { startOfHour } from "date-fns";
 
 import Layout from "../containers/Layout";
 import { useAppDispatch, useAppSelector } from "../hooks";
@@ -16,15 +17,32 @@ import LoadingPage from "./LoadingPage";
 import "../styles/DashboardPage.scss";
 import InterviewCard from "../components/InterviewCard/InterviewCard";
 import AvailabilityCard from "../components/AvailabilityCard/AvailabilityCard";
+import { InterviewWithUserInfo } from "../../../@types";
+
+const getNextInterview = (interviews: InterviewWithUserInfo[]) => {
+  const currentTime = startOfHour(new Date());
+  const sortedInterviews = interviews
+    .filter((interview) => interview.startTime.getTime() >= currentTime.getTime() && interview.status === "CONFIRMED")
+    .sort((A, B) => A.startTime.getTime() - B.startTime.getTime());
+  return sortedInterviews[0];
+};
 
 const DashboardPage: React.FC<{}> = () => {
   const dispatch = useAppDispatch();
   const dashboardState = useAppSelector((state) => state.dashboard, shallowEqual);
   const authState = useAppSelector((state) => state.auth, shallowEqual);
+  const [nextInterview, setNextInterview] = useState<InterviewWithUserInfo | undefined>(
+    getNextInterview(dashboardState.interviews)
+  );
 
   useEffect(() => {
     dispatch(fetchAll());
   }, [dispatch]);
+
+  useEffect(() => {
+    const _nextInterview = getNextInterview(dashboardState.interviews);
+    setNextInterview(_nextInterview);
+  }, [dashboardState.interviews]);
 
   if (authState.isLoading || dashboardState.isLoading || !authState.user) return <LoadingPage />;
 
@@ -59,7 +77,7 @@ const DashboardPage: React.FC<{}> = () => {
             <h2 className="dashboard__title">UPCOMING MOCK</h2>
             <InterviewCard
               user={authState.user}
-              interview={dashboardState.interviews[0]}
+              interview={nextInterview}
               handleCancelInterview={handleCancelInterview}
             />
           </div>
