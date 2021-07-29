@@ -1,60 +1,93 @@
 import { useState } from "react";
 import Select from "react-select";
 import { User, CodingLanguage, QuestionDifficulty, QuestionType } from "@prisma/client";
-import { FiEdit3 } from "react-icons/fi";
+import { MdEdit, MdSave } from "react-icons/md";
 import { UserPreferences } from "../../../../@types";
 import "./UserSettingsCard.scss";
+import QuestionDifficultyTag from "../QuestionDifficultyTag";
+import CodingLanguageTag from "../CodingLanguageTag/CodingLanguageTag";
+import QuestionTypeTag from "../QuestionTypeTag/QuestionTypeTag";
 
-const languageOptions = [
-  { value: CodingLanguage.PYTHON, label: CodingLanguage.PYTHON },
-  { value: CodingLanguage.JAVASCRIPT, label: CodingLanguage.JAVASCRIPT },
-  { value: CodingLanguage.JAVA, label: CodingLanguage.JAVA },
-];
+const languageOptions = Object.values(CodingLanguage).map((val) => ({ value: val, label: val }));
+const difficultyOptions = Object.values(QuestionDifficulty).map((val) => ({ value: val, label: val }));
+const questionTypeOptions = Object.values(QuestionType).map((val) => ({ value: val, label: val }));
 
-const difficultyOptions = [
-  { value: QuestionDifficulty.EASY, label: QuestionDifficulty.EASY },
-  { value: QuestionDifficulty.MEDIUM, label: QuestionDifficulty.MEDIUM },
-  { value: QuestionDifficulty.HARD, label: QuestionDifficulty.HARD },
-];
-
-const questionTypeOptions = [
-  { value: QuestionType.ARRAY, label: QuestionType.ARRAY },
-  { value: QuestionType.LINKED_LIST, label: QuestionType.LINKED_LIST },
-];
-
-export interface UserSettingsProps {
+export interface UserSettingsCardProps {
   user: User;
-  handleUpdateSettings: (id: string, prefs: Partial<UserPreferences>) => Promise<void>;
+  handleUpdateSettings: (prefs: Partial<UserPreferences>) => Promise<void>;
 }
 
-const UserSettingsCard: React.FC<UserSettingsProps> = ({ user, handleUpdateSettings }) => {
-  const [editMode, setEditMode] = useState(false);
+const UserSettingsCard: React.FC<UserSettingsCardProps> = ({ user, handleUpdateSettings }) => {
+  const [questionDifficulty, setQuestionDifficulty] = useState<QuestionDifficulty>(user.questionDifficulty);
+  const [codingLanguage, setCodingLanguage] = useState<CodingLanguage[]>(user.codingLanguage);
+  const [questionTypes, setQuestionTypes] = useState<QuestionType[]>(user.questionTypes);
+  const [editMode, setEditMode] = useState<boolean>(false);
+  const toggleEditMode = () => setEditMode((prev) => !prev);
+
+  const handleSave = async () => {
+    await handleUpdateSettings({ questionDifficulty, codingLanguage, questionTypes });
+    setEditMode(false);
+  };
 
   return (
     <div className="userSettingsCard">
       <div className="userSettingsCard__settingName">EMAIL</div>
       <div className="userSettingsCard__text">{user.email}</div>
       <div className="userSettingsCard__settingName">CODING LANGUAGES</div>
-      <Select
-        isMulti
-        defaultValue={user.codingLanguage}
-        options={languageOptions}
-        onChange={(values) => handleUpdateSettings(user.id, values)}
-      />
+      {editMode ? (
+        <Select
+          isMulti
+          className="userSettingsCard__select"
+          value={languageOptions.filter(({ value }) => codingLanguage.includes(value))}
+          options={languageOptions}
+          onChange={(values) => setCodingLanguage(values.map(({ value }) => value))}
+        />
+      ) : (
+        <div className="userSettingsCard__tags">
+          {codingLanguage.map((language) => (
+            <CodingLanguageTag key={language} language={language} />
+          ))}
+        </div>
+      )}
       <div className="userSettingsCard__settingName">DIFFICULTY</div>
-      <Select
-        defaultValue={user.questionDifficulty}
-        options={difficultyOptions}
-        onChange={(values) => handleUpdateSettings(user.id, values)}
-      />
+      {editMode ? (
+        <Select
+          className="userSettingsCard__select"
+          value={difficultyOptions.find(({ value }) => questionDifficulty === value)}
+          options={difficultyOptions}
+          onChange={({ value }) => setQuestionDifficulty(value)}
+        />
+      ) : (
+        <div>
+          <QuestionDifficultyTag difficulty={questionDifficulty} />
+        </div>
+      )}
       <div className="userSettingsCard__settingName">QUESTION TYPES</div>
-      <Select
-        isMulti
-        defaultValue={user.questionTypes}
-        options={questionTypeOptions}
-        onChange={(values) => handleUpdateSettings(user.id, values)}
-      />
-      <div className="userSettingsCard__editbutton">{editMode ? <div>save</div> : <FiEdit3 />}</div>
+      {editMode ? (
+        <Select
+          isMulti
+          className="userSettingsCard__select"
+          value={questionTypeOptions.filter(({ value }) => questionTypes.includes(value))}
+          options={questionTypeOptions}
+          onChange={(values) => setQuestionTypes(values.map(({ value }) => value))}
+        />
+      ) : (
+        <div className="userSettingsCard__tags">
+          {questionTypes.map((questionType) => (
+            <QuestionTypeTag key={questionType} type={questionType} />
+          ))}
+        </div>
+      )}
+
+      {editMode ? (
+        <button className="userSettingsCard__editbutton" onClick={handleSave}>
+          <MdSave size={20} />
+        </button>
+      ) : (
+        <button className="userSettingsCard__editbutton" onClick={toggleEditMode}>
+          <MdEdit size={20} />
+        </button>
+      )}
     </div>
   );
 };

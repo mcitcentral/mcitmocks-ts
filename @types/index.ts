@@ -44,7 +44,7 @@ export type UserPreferences = Omit<User, "id" | "name" | "email" | "imageUrl">;
 
 export type UserPublic = Pick<User, "name" | "imageUrl" | "codingLanguage" | "questionDifficulty" | "questionTypes">;
 
-export type UpdateUserPreferencesRequest = UserPreferences;
+export type UpdateUserPreferencesRequest = Partial<UserPreferences>;
 
 export type SearchAvailabilitiesRequest = {
   startTime: string[] | string;
