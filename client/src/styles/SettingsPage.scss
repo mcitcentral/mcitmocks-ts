@@ -1,0 +1,13 @@
+.settings {
+  width: 100%;
+  max-width: 780px;
+  margin: 0 auto;
+  padding-top: 50px;
+
+  &__title {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 12px;
+    font-weight: 500;
+    margin-bottom: 15px;
+  }
+}

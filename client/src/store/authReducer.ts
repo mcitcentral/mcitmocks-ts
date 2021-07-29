@@ -1,5 +1,6 @@
 import { User } from "@prisma/client";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { UserPreferences } from "../../../@types";
 import apiClient from "../lib/apiClient";
 
 export const fetchUserByAccessToken = createAsyncThunk("auth/fetchUserByAccessToken", async (accessToken: string) => {
@@ -12,6 +13,10 @@ export const fetchUserByJWT = createAsyncThunk("auth/fetchUserByJWT", async () =
 
 export const logoutUser = createAsyncThunk("auth/logoutUser", async () => {
   return await apiClient.logoutUser();
+});
+
+export const updateUser = createAsyncThunk("auth/updateUser", async (preferences: Partial<UserPreferences>) => {
+  return await apiClient.updateUser(preferences);
 });
 
 const authSlice = createSlice({
@@ -58,6 +63,9 @@ const authSlice = createSlice({
       state.user = null;
       state.isAuthenticated = false;
       state.isLoading = false;
+    },
+    [updateUser.fulfilled.type]: (state, action) => {
+      state.user = action.payload.user;
     },
   },
 });

@@ -1,6 +1,11 @@
 import { Availability, InterviewStatus } from "@prisma/client";
 import axios from "axios";
-import { AvailabilityWithUser, GetAvailabilitiesResponse, GetInterviewResponse } from "../../../@types";
+import {
+  AvailabilityWithUser,
+  GetAvailabilitiesResponse,
+  GetInterviewResponse,
+  UserPreferences,
+} from "../../../@types";
 import { convertAvailabilitiesResponse, convertInterviewResponse } from "./utils";
 
 axios.defaults.baseURL = "/api";
@@ -17,6 +22,10 @@ const apiClient = {
   },
   logoutUser: async () => {
     await axios.get("/auth/logout");
+  },
+  updateUser: async (preferences: Partial<UserPreferences>) => {
+    const response = await axios.post("/users", preferences);
+    return response.data;
   },
 
   // INTERVIEW

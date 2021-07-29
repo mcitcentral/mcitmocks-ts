@@ -7,6 +7,7 @@ import IndexPage from "./pages/IndexPage";
 import DashboardPage from "./pages/DashboardPage";
 import LoadingPage from "./pages/LoadingPage";
 import InterviewPage from "./pages/InterviewPage";
+import SettingsPage from "./pages/SettingsPage";
 
 import "./styles/Reset.scss";
 import "./styles/App.scss";
@@ -27,6 +28,7 @@ const App: React.FC = () => {
       <Switch>
         <Route path="/dashboard">{isAuthenticated ? <DashboardPage /> : <Redirect to="/" />}</Route>
         <Route path="/interviews/:interviewId">{isAuthenticated ? <InterviewPage /> : <Redirect to="/" />}</Route>
+        <Route path="/settings">{isAuthenticated ? <SettingsPage /> : <Redirect to="/" />}</Route>
         <Route path="/">
           <IndexPage />
         </Route>

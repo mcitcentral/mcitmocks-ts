@@ -1,0 +1,46 @@
+@import "../../styles/Variables.scss";
+
+.userSettingsCard {
+  width: 100%;
+  max-width: 780px;
+  display: grid;
+  grid-template-columns: 150px 500px;
+  grid-template-rows: repeat(4, 50px);
+  grid-column-gap: 25px;
+  align-items: center;
+  position: relative;
+  background-color: white;
+  box-shadow: $default-shadow;
+  padding: 40px;
+  border-radius: 10px;
+
+  &__text {
+    font-family: $inter;
+  }
+  &__select {
+    font-family: $plex-mono;
+    font-size: 12px;
+  }
+  &__settingName {
+    color: $blue-500;
+    font-family: $plex-mono;
+    font-size: 12px;
+  }
+  &__tags {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 10px;
+  }
+  &__editbutton {
+    position: absolute;
+    top: 40px;
+    right: 40px;
+    svg {
+      color: $gray-300;
+    }
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
