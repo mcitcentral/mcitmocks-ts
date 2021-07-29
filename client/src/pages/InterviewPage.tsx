@@ -46,7 +46,7 @@ const InterviewPage: React.FC<{}> = () => {
   }, [dispatch, interviewId, interviewState.interview]);
 
   const handleOnChange = (value: string) => {
-    setCode(value);
+    dispatch(setCode(value));
     if (socket) socket.emit("update", { roomId: interviewId, message: value });
   };
 

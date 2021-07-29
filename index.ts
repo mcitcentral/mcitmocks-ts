@@ -45,7 +45,7 @@ const io = require("socket.io")(server);
 io.on("connection", (socket: Socket) => {
   console.log("A client has connected to websockets");
   socket.join(socket.handshake.query.roomId);
-  socket.on("update", ({ roomId, message }) => io.to(roomId).emit("update", message));
+  socket.on("update", ({ roomId, message }) => socket.to(roomId).emit("update", message));
   socket.on("disconnect", () => console.log("A client has disconnected from websockets"));
 });
 

@@ -62,4 +62,4 @@ const Video: React.FC<VideoProps> = ({ agoraId, interviewId }) => {
   );
 };
 
-export default Video;
+export default React.memo(Video);
