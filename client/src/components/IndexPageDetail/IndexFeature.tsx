@@ -9,7 +9,9 @@ export interface IndexFeatureProps {
 const IndexFeature: React.FC<IndexFeatureProps> = ({ logo, title, introduction }) => {
   return (
     <div className="feature">
-      <div className="feature__row1">logo</div>
+      <div className="feature__row1">
+        <img height={150} width={300} src={logo} />
+      </div>
       <p className="feature__row2">{title}</p>
       <div className="feature__row3">{introduction}</div>
     </div>
