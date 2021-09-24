@@ -44,6 +44,10 @@ const InterviewCard: React.FC<InterviewCardProps> = ({ interview, user, handleCa
     isAfter(new Date(), sub(interview.startTime, { minutes: 15 })) &&
     isBefore(new Date(), add(interview.startTime, { minutes: 75 }));
 
+  const onClick = () => {
+    window.location.href = `/interviews/${interview.id}`;
+  };
+
   return (
     <div className="interviewCard">
       <div className="interviewCard__image">
@@ -68,7 +72,12 @@ const InterviewCard: React.FC<InterviewCardProps> = ({ interview, user, handleCa
         <button className="interviewCard__cancel" disabled={isInterviewNow} onClick={() => setIsCancelActive(true)}>
           <FcCancel size={20} />
         </button>
-        <button className="interviewCard__status" disabled={!isInterviewNow} data-status={interview.status}>
+        <button
+          className="interviewCard__status"
+          onClick={onClick}
+          disabled={!isInterviewNow}
+          data-status={interview.status}
+        >
           {isInterviewNow ? "JOIN" : interviewStatusMap[interview.status]}
         </button>
       </div>
